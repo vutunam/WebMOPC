@@ -1,0 +1,120 @@
+﻿@{
+	Layout = null;
+}
+@model User
+
+<!DOCTYPE html>
+<html lang="en"
+	  class="light-style customizer-hide"
+	  dir="ltr"
+	  data-theme="theme-default"
+	  data-assets-path="~/assets/"
+	  data-template="vertical-menu-template-free">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+	<title>Phòng khám Thăng Long</title>
+
+	<meta name="description" content="" />
+	<link rel="icon" type="image/x-icon" href="~/img/logoThangLong.svg" />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap&subset=vietnamese" rel="stylesheet">
+
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		  rel="stylesheet">
+	<link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+	<link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
+	<link rel="stylesheet" href="~/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+	<link rel="stylesheet" href="~/assets/css/demo.css" />
+	<link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+	<link rel="stylesheet" href="~/assets/vendor/css/pages/page-auth.css" />
+	<script src="~/assets/vendor/js/helpers.js"></script>
+	<script src="~/assets/js/config.js"></script>
+</head>
+
+<body>
+	<!-- Content -->
+
+	<div class="container-xxl">
+		<div class="authentication-wrapper authentication-basic container-p-y">
+			<div class="authentication-inner">
+				<!-- Register -->
+				<div class="card">
+					<div class="card-body">
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<div class="logo-header" data-background-color="dark">
+								<a href="#" class="app-brand-link" style="padding: 12px 0;">
+									<span class="app-brand-logo demo">
+										<img src="~/img/logoThangLong.svg" alt="navbar brand" class="navbar-brand" height="70" />
+									</span>
+								</a>
+							</div>
+						</div>
+						<!-- /Logo -->
+						<h4 class="mb-2">Chào mừng tới phòng khám! 👋</h4>
+						<p class="mb-4">Đăng nhập ngay để khám!</p>
+
+						<form id="formAuthentication" class="mb-3" action="Login" method="POST">
+							<div class="mb-3">
+								<label for="username" class="form-label">Tên đăng nhập</label>
+								<input type="text"
+									   class="form-control"
+									   id="username"
+									   name="username"
+									   placeholder="Nhập email hoặc tên người dùng của bạn"
+									   autocomplete="username"
+									   autofocus required
+									   oninvalid="this.setCustomValidity('Vui lòng điền tên đăng nhập!')"
+									   oninput="this.setCustomValidity('')" />
+							</div>
+							<div class="mb-3 form-password-toggle">
+								<div class="d-flex justify-content-between">
+									<label class="form-label" for="password">Mật khẩu</label>
+									<a href="@Url.Action("ForgotPass", "Home")">
+										<small>Quên mật khẩu?</small>
+									</a>
+								</div>
+								<div class="input-group input-group-merge">
+									<input type="password"
+										   id="password"
+										   class="form-control"
+										   name="password"
+										   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+										   aria-describedby="password" 
+										   autocomplete="cur_password" required 
+										   oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu!')"
+										   oninput="this.setCustomValidity('')" />
+									<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+								</div>
+							</div>
+							<p class="text-danger">@ViewBag.Error</p>
+							<div class="mb-3">
+								<button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
+							</div>
+						</form>
+
+						<p class="text-center">
+							<span>Bạn là người dùng mới?</span>
+							<a href="@Url.Action("RegisterAcc", "Home")">
+								<span>Tạo tài khoản</span>
+							</a>
+						</p>
+					</div>
+				</div>
+				<!-- /Register -->
+			</div>
+		</div>
+	</div>
+	<script src="~/assets/vendor/libs/jquery/jquery.js"></script>
+	<script src="~/assets/vendor/libs/popper/popper.js"></script>
+	<script src="~/assets/vendor/js/bootstrap.js"></script>
+	<script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+	<script src="~/assets/vendor/js/menu.js"></script>
+	<script src="~/assets/js/main.js"></script>
+	<script src="~/assets/js/notification.js"></script>
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>
+
