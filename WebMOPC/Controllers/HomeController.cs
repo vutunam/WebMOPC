@@ -18,6 +18,7 @@ namespace WebMOPC.Controllers
 		public DoctorsRepository _doctorRepo = new DoctorsRepository();
 		public string abc = "";
 		public string xyz = "";
+  		public string test = "";
 		public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
