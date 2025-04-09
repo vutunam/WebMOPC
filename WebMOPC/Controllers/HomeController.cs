@@ -11,7 +11,6 @@ namespace WebMOPC.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-		public UserPermissionRepository _userPermissionRepo = new UserPermissionRepository();
 		public UsersRepository _userRepo = new UsersRepository();
 		public StaffsRepository _staffRepo = new StaffsRepository();
 		public PatientsRepository _patienRepo = new PatientsRepository();
