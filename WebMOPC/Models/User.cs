@@ -20,4 +20,8 @@ public partial class User
     public int? Status { get; set; }
 
     public bool? IsDeleted { get; set; }
+
+    public string? Avatar { get; set; }
+
+    public bool? IsAdmin { get; set; }
 }

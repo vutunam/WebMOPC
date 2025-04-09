@@ -68,22 +68,33 @@ namespace WebMOPC.Controllers
 
 			SessionDTO sessionDTO = SQLHelper<SessionDTO>
 							.ProcedureToModel("spLogin", new string[] { "@LoginName", "@Password" }, new object[] { username, password });
-			if (sessionDTO != null)
+			if ((sessionDTO.Avatar == null || sessionDTO.Avatar == "") && sessionDTO != null)
 			{
-				List<UserPermission> lsRole = _userPermissionRepo.GetAll().Where(x => x.UserId == sessionDTO.ID).ToList();
-				sessionDTO.lsRole = lsRole;
-			}
+				User u = _userRepo.GetByID(sessionDTO.ID);
+				sessionDTO.Avatar = u.Avatar = "~/img/user.png";
+				_userRepo.Update(u);
+            }
 
 			if (user.Rows.Count > 0)
 			{
 
 				HttpContext.Session.SetObject<SessionDTO>("UserLogin", sessionDTO);
 
+				// Gán thông tin người dùng
 				HttpContext.Session.SetInt32("userid", TextUtils.ToInt(user.Rows[0]["ID"]));
 				HttpContext.Session.SetInt32("doctorID", TextUtils.ToInt(user.Rows[0]["DoctorID"]));
 				HttpContext.Session.SetInt32("staffID", TextUtils.ToInt(user.Rows[0]["StaffID"]));
 				HttpContext.Session.SetInt32("patientID", TextUtils.ToInt(user.Rows[0]["PatientID"]));
 				HttpContext.Session.SetString("loginName", TextUtils.ToString(user.Rows[0]["LoginName"]));
+				HttpContext.Session.SetString("img", TextUtils.ToString(sessionDTO.Avatar));
+				HttpContext.Session.SetString("position", TextUtils.ToString(user.Rows[0]["Position"]));
+
+				// Check phân quyền 
+				HttpContext.Session.SetString("isStaff", TextUtils.ToString(user.Rows[0]["IsStaff"]));
+				HttpContext.Session.SetString("isPatient", TextUtils.ToString(user.Rows[0]["IsPatient"]));
+				HttpContext.Session.SetString("isDoctor", TextUtils.ToString(user.Rows[0]["IsDoctor"]));
+				HttpContext.Session.SetString("isAdmin", TextUtils.ToString(user.Rows[0]["IsAdmin"]));
+
 				return RedirectToAction("Dashboard", "Home");
 			}
 			ViewBag.Error = "Sai tên hoặc mật khẩu đăng nhập. Vui lòng kiểm tra lại!";

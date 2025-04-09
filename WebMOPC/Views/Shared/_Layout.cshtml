@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+	var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+}
+<!DOCTYPE html>
 
 <html lang="en"
 	  class="light-style layout-menu-fixed"
@@ -52,7 +56,7 @@
 				<ul class="menu-inner py-1">
 					<!-- Trang chủ -->
 					<li class="menu-item active">
-						<a href="#" class="menu-link">
+						<a href="@Url.Action("Index", "Home")" class="menu-link">
 							<i class='menu-icon tf-icons bx bx-home-alt'></i>
 							<div data-i18n="Analytics">Trang chủ</div>
 						</a>
@@ -162,7 +166,7 @@
 							<li class="nav-item navbar-dropdown dropdown-user dropdown">
 								<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
-										<img src="~/img/thobaymau.jpg" alt class="w-px-40 h-auto rounded-circle" />
+										<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" />
 									</div>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
@@ -171,12 +175,16 @@
 											<div class="d-flex">
 												<div class="flex-shrink-0 me-3">
 													<div class="avatar avatar-online">
-														<img src="~/img/thobaymau.jpg" alt class="w-px-40 h-auto rounded-circle" />
+														<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" />
 													</div>
 												</div>
 												<div class="flex-grow-1">
-													<span class="fw-semibold d-block">Thỏ bảy màu</span>
-													<small class="text-muted">Bác sĩ</small>
+													<span class="fw-semibold d-block">
+														@HttpContextAccessor.HttpContext.Session.GetString("loginName")
+														</span>
+													<small class="text-muted">
+														@HttpContextAccessor.HttpContext.Session.GetString("position")
+														</small>
 												</div>
 											</div>
 										</a>
@@ -185,7 +193,7 @@
 										<div class="dropdown-divider"></div>
 									</li>
 									<li>
-										<a class="dropdown-item" href="#">
+										<a class="dropdown-item" href="@Url.Action("Index", "Account")">
 											<i class="bx bx-user me-2"></i>
 											<span class="align-middle">Thông tin</span>
 										</a>

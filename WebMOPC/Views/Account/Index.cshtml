@@ -1,0 +1,111 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-12 mb-4 order-0">
+            <div class="card mb-4">
+                <h5 class="card-header">Thông tin cá nhân</h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="./img/thobaymau.jpg"
+                             alt="user-avatar"
+                             class="d-block rounded"
+                             height="100"
+                             width="100"
+                             id="uploadedAvatar" />
+                        <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Tải lên ảnh mới</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file"
+                                       id="upload"
+                                       class="account-file-input"
+                                       hidden
+                                       accept="image/png, image/jpeg" />
+                            </label>
+
+                            <p class="text-muted mb-0">Chấp nhận định dạng JPG, GIF or PNG. Dung lượng nhỏ hơn 800K</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">Tên người dùng</label>
+                                <input type="text" class="form-control" id="acc_Login" name="" placeholder="" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">Mật khẩu</label>
+                                <input type="text" class="form-control" id="acc_pass" name="" placeholder="" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="firstName" class="form-label">Họ và tên</label>
+                                <input class="form-control"
+                                       type="text"
+                                       id="acc_fullname"
+                                       name="firstName"
+                                       value=""
+                                       autofocus />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">Sinh nhật</label>
+                                <input type="date" id="acc_birth" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input class="form-control"
+                                       type="text"
+                                       id="acc_email"
+                                       name="email"
+                                       value=""
+                                       placeholder="abc@example.com" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">Giới tính</label>
+                                <select id="acc_gender" class="select2 form-select">
+                                    <option value="0">Nam</option>
+                                    <option value="1">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">VN (+84)</span>
+                                    <input type="text"
+                                           id="acc_phoneNumber"
+                                           name="phoneNumber"
+                                           class="form-control"
+                                           placeholder="987 654 321" />
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="address" class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="acc_address" name="address" placeholder="Address" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">CCCD</label>
+                                <input type="text" class="form-control" id="acc_CCCD" name="CCCD" placeholder="Số căn cước" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="" class="form-label">Thẻ bảo hiểm</label>
+                                <input type="text" class="form-control" id="acc_healthInsurance" name="HealthInsurance" placeholder="Số thẻ bảo hiểm" />
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /Account -->
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -12,7 +12,12 @@ namespace WebMOPC.Models.DTO
 		public int StaffID { get; set; }
 		public int PatientID { get; set; }
 		public string LoginName { get; set; }
-		public string FullName { get; set; }
-		public List<UserPermission> lsRole { get; set; }
+		public string Name { get; set; }
+		public string Position { get; set; }
+		public string Avatar { get; set; }
+		public bool IsAdmin { get; set; }
+		public bool IsStaff { get; set; }
+		public bool IsPatient { get; set; }
+		public bool IsDoctor { get; set; }
 	}
 }

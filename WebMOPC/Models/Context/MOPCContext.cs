@@ -24,8 +24,6 @@ public partial class MopcContext : DbContext
 
     public virtual DbSet<Doctor> Doctors { get; set; }
 
-    public virtual DbSet<Feature> Features { get; set; }
-
     public virtual DbSet<Invoice> Invoices { get; set; }
 
     public virtual DbSet<MedicalAppointment> MedicalAppointments { get; set; }
@@ -38,13 +36,9 @@ public partial class MopcContext : DbContext
 
     public virtual DbSet<Prescription> Prescriptions { get; set; }
 
-    public virtual DbSet<RoleFeature> RoleFeatures { get; set; }
-
     public virtual DbSet<Staff> Staffs { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
-    public virtual DbSet<UserPermission> UserPermissions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -104,16 +98,6 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.FullName).HasMaxLength(250);
             entity.Property(e => e.Phone).HasMaxLength(250);
             entity.Property(e => e.UserId).HasColumnName("UserID");
-        });
-
-        modelBuilder.Entity<Feature>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Features__3214EC275022D401");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Code).HasMaxLength(550);
-            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Name).HasMaxLength(550);
         });
 
         modelBuilder.Entity<Invoice>(entity =>
@@ -194,17 +178,6 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.MedicationId).HasColumnName("MedicationID");
         });
 
-        modelBuilder.Entity<RoleFeature>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__RoleFeat__3214EC27398F09BD");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Code).HasMaxLength(550);
-            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.FeatureId).HasColumnName("FeatureID");
-            entity.Property(e => e.Name).HasMaxLength(550);
-        });
-
         modelBuilder.Entity<Staff>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Staffs__3214EC27221FCA0F");
@@ -229,23 +202,12 @@ public partial class MopcContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Users__3214EC270C3651CE");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Avatar).HasMaxLength(250);
             entity.Property(e => e.Email).HasMaxLength(250);
             entity.Property(e => e.LoginName).HasMaxLength(250);
             entity.Property(e => e.Name).HasMaxLength(250);
             entity.Property(e => e.Password).HasMaxLength(250);
             entity.Property(e => e.Phone).HasMaxLength(250);
-        });
-
-        modelBuilder.Entity<UserPermission>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__UserPerm__3214EC27C4B7C83A");
-
-            entity.ToTable("UserPermission");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.FeatureId).HasColumnName("FeatureID");
-            entity.Property(e => e.RoleFeatureId).HasColumnName("RoleFeatureID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 
         OnModelCreatingPartial(modelBuilder);
