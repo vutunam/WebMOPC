@@ -1,4 +1,8 @@
-﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,7 +16,7 @@
                 <!-- Account -->
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="./img/thobaymau.jpg"
+                        <img src="@Url.Content(imgPath)"
                              alt="user-avatar"
                              class="d-block rounded"
                              height="100"

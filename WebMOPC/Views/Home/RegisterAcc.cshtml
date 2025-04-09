@@ -11,7 +11,7 @@
 	  data-assets-path="~/assets/"
 	  data-template="vertical-menu-template-free">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="viewport"
 		  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
@@ -19,11 +19,11 @@
 
 	<meta name="description" content="" />
 	<link rel="icon" type="image/x-icon" href="~/img/logoThangLong.svg" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap&subset=vietnamese" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap&subset=vietnamese" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		  rel="stylesheet">
 	<link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
 	<link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
 	<link rel="stylesheet" href="~/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
@@ -37,117 +37,151 @@
 <body>
 	<!-- Content -->
 
-    <div class="container-xxl">
-        <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner">
-                <!-- Register Card -->
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Logo -->
-                        <div class="app-brand justify-content-center">
-                            <div class="logo-header" data-background-color="dark">
-                                <a href="#" class="app-brand-link" style="padding: 12px 0;">
-                                    <span class="app-brand-logo demo">
-                                        <img src="~/img/logoThangLong.svg" alt="navbar brand" class="navbar-brand" height="70" />
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /Logo -->
-                        <h4 class="mb-2">Đăng ký tại đây 🚀</h4>
-                        <p class="mb-4">Dễ dàng để có sức khỏe mạnh!</p>
+	<div class="container-xxl">
+		<div class="authentication-wrapper authentication-basic container-p-y">
+			<div class="authentication-inner">
+				<!-- Register Card -->
+				<div class="card">
+					<div class="card-body">
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<div class="logo-header" data-background-color="dark">
+								<a href="#" class="app-brand-link" style="padding: 12px 0;">
+									<span class="app-brand-logo demo">
+										<img src="~/img/logoThangLong.svg" alt="navbar brand" class="navbar-brand" height="70" />
+									</span>
+								</a>
+							</div>
+						</div>
+						<!-- /Logo -->
+						<h4 class="mb-2">Đăng ký tại đây 🚀</h4>
+						<p class="mb-4">Dễ dàng để có sức khỏe mạnh!</p>
 
-                        <form id="formAuthentication" class="mb-3" action="RegisterAcc" method="POST">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Tên đăng nhập</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="username"
-                                       name="username"
-                                       placeholder="Nhập tên đăng nhập"
-                                       autofocus 
-                                       required
-                                       oninvalid="this.setCustomValidity('Vui lòng nhập tên đăng nhập!')"
-                                       oninput="this.setCustomValidity('')" value="@ViewBag.Username" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Nhập email" required
-                                       oninvalid="this.setCustomValidity('Vui lòng nhập email!')"
-                                       oninput="this.setCustomValidity('')" value="@ViewBag.Email" />
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Mật khẩu</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password"
-                                           id="password"
-                                           class="form-control"
-                                           name="password"
-                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                           aria-describedby="password" 
-                                           required
-                                           oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu!')"
-                                           oninput="this.setCustomValidity('')" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                            </div>
+						<form id="formAuthentication" class="mb-3" action="RegisterAcc" method="POST">
+							
+							<div class="mb-3">
+								<label for="fullName" class="form-label">Họ và tên</label>
+								<input type="text"
+									   class="form-control"
+									   id="fullName"
+									   name="fullName"
+									   placeholder="Nhập họ tên"
+									   autofocus
+									   required
+									   oninvalid="this.setCustomValidity('Vui lòng nhập họ tên!')"
+									   oninput="this.setCustomValidity('')" value="@ViewBag.fullname" />
+							</div>
+							<div class="row">
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" required
-                                           oninvalid="this.setCustomValidity('Bạn cần đồng ý với điều khoản & dịch vụ!')"
-                                           oninput="this.setCustomValidity('')" />
-                                    <label class="form-check-label" for="terms-conditions">
-                                        Tôi đồng ý với
-                                        <a href="javascript:void(0);">điều khoản & dịch vụ</a>
-                                    </label>
-                                </div>
-                            </div>
-                            <p class="text-danger">@ViewBag.Error</p>
-                            @if (ViewBag.success != null)
-                            {
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        let timerInterval;
-                                        let timeLeft = 3;
+								<div class="mb-3 col-md-6">
+									<label for="birthday" class="form-label">Sinh nhật</label>
+									<input type="date"
+										   id="birthday"
+										   name="birthday"
+										   class="form-control"
+										   value="@DateTime.Now.AddYears(-7).ToString("yyyy-MM-dd")"
+										   max="@DateTime.Now.AddYears(-7).ToString("yyyy-MM-dd")"
+										   oninvalid="this.setCustomValidity('Vui lòng chọn ngày sinh!')">
+								</div>
+								<div class="mb-3 col-md-6">
+									<label for="gender" class="form-label">Giới tính</label>
+									<select id="gender" name="gender" class="select2 form-select">
+										<option value="0">Nam</option>
+										<option value="1">Nữ</option>
+									</select>
+								</div>
+							</div>
+							<div class="mb-3">
+								<label for="username" class="form-label">Tên đăng nhập</label>
+								<input type="text"
+									   class="form-control"
+									   id="username"
+									   name="username"
+									   placeholder="Nhập tên đăng nhập"
+									   autofocus
+									   required
+									   oninvalid="this.setCustomValidity('Vui lòng nhập tên đăng nhập!')"
+									   oninput="this.setCustomValidity('')" value="@ViewBag.Username" />
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label">Email</label>
+								<input type="text" class="form-control" id="email" name="email" placeholder="Nhập email" required
+									   oninvalid="this.setCustomValidity('Vui lòng nhập email!')"
+									   oninput="this.setCustomValidity('')" value="@ViewBag.Email" />
+							</div>
+							<div class="mb-3 form-password-toggle">
+								<label class="form-label" for="password">Mật khẩu</label>
+								<div class="input-group input-group-merge">
+									<input type="password"
+										   id="password"
+										   class="form-control"
+										   name="password"
+										   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+										   aria-describedby="password"
+										   required
+										   minlength="6"
+										   oninvalid="this.setCustomValidity('Mật khẩu phải có ít nhất 6 ký tự!')"
+										   oninput="this.setCustomValidity('')" />
+									<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+								</div>
+							</div>
 
-                                        Swal.fire({
-                                            icon: "success",
-                                            title: "Đăng ký thành công",
-                                            html: `Bạn sẽ được chuyển hướng sau <b>${timeLeft}</b> giây...`,
-                                            timer: timeLeft * 1000, 
-                                            timerProgressBar: true,
-                                            showConfirmButton: false,
-                                            didOpen: () => {
-                                                const swalText = Swal.getHtmlContainer().querySelector("b");
-                                                timerInterval = setInterval(() => {
-                                                    timeLeft--;
-                                                    swalText.textContent = timeLeft;
-                                                }, 1000);
-                                            },
-                                            willClose: () => {
-                                                clearInterval(timerInterval); 
-                                                window.location.href = "/Home/Login"; 
-                                            }
-                                        });
-                                    });
-                                </script>
-                            }
-                            <button class="btn btn-primary d-grid w-100" type="submit">Đăng ký</button>
-                        </form>
+							<div class="mb-3">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" required
+										   oninvalid="this.setCustomValidity('Bạn cần đồng ý với điều khoản & dịch vụ!')"
+										   oninput="this.setCustomValidity('')" />
+									<label class="form-check-label" for="terms-conditions">
+										Tôi đồng ý với
+										<a href="javascript:void(0);">điều khoản & dịch vụ</a>
+									</label>
+								</div>
+							</div>
+							<p class="text-danger">@ViewBag.Error</p>
+							@if (ViewBag.success != null)
+							{
+								<script>
+									document.addEventListener("DOMContentLoaded", function () {
+										let timerInterval;
+										let timeLeft = 3;
 
-                        <p class="text-center">
-                            <span>Bạn có tài khoản?</span>
-                            <a href="@Url.Action("Login", "Home")">
-                                <span>Đăng nhập</span>
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <!-- Register Card -->
-            </div>
-        </div>
-    </div>
+										Swal.fire({
+											icon: "success",
+											title: "Đăng ký thành công",
+											html: `Bạn sẽ được chuyển hướng sau <b>${timeLeft}</b> giây...`,
+											timer: timeLeft * 1000,
+											timerProgressBar: true,
+											showConfirmButton: false,
+											didOpen: () => {
+												const swalText = Swal.getHtmlContainer().querySelector("b");
+												timerInterval = setInterval(() => {
+													timeLeft--;
+													swalText.textContent = timeLeft;
+												}, 1000);
+											},
+											willClose: () => {
+												clearInterval(timerInterval);
+												window.location.href = "/Home/Login";
+											}
+										});
+									});
+								</script>
+							}
+							<button class="btn btn-primary d-grid w-100" type="submit">Đăng ký</button>
+						</form>
+
+						<p class="text-center">
+							<span>Bạn có tài khoản?</span>
+							<a href="@Url.Action("Login", "Home")">
+								<span>Đăng nhập</span>
+							</a>
+						</p>
+					</div>
+				</div>
+				<!-- Register Card -->
+			</div>
+		</div>
+	</div>
 	<script src="~/assets/vendor/libs/jquery/jquery.js"></script>
 	<script src="~/assets/vendor/libs/popper/popper.js"></script>
 	<script src="~/assets/vendor/js/bootstrap.js"></script>
@@ -155,7 +189,7 @@
 	<script src="~/assets/vendor/js/menu.js"></script>
 	<script src="~/assets/js/main.js"></script>
 	<script src="~/assets/js/notification.js"></script>
-    
+
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

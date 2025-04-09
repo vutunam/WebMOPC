@@ -18,7 +18,7 @@ namespace WebMOPC.Controllers
 		public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
-		}
+		}	
 
 		[HttpGet]
 		public IActionResult Index()
@@ -211,7 +211,7 @@ namespace WebMOPC.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult RegisterAcc(string username, string password, string email)
+		public IActionResult RegisterAcc(string fullName, DateTime birthday, int gender, string username, string password, string email)
 		{
 			User uMail = _userRepo.GetAll().Where(x => x.Email == email).FirstOrDefault();
 			User uLogin = _userRepo.GetAll().Where(x => x.LoginName.ToUpper() == username.ToUpper()).FirstOrDefault();
@@ -240,9 +240,13 @@ namespace WebMOPC.Controllers
 			_userRepo.Create(user);
 
             Patient pa = new Patient();
+			pa.FullName = fullName;
+			pa.Gender = TextUtils.ToBoolean(gender);
+			pa.DateOfBirth = birthday;
 			pa.UserId = user.Id;
             _patienRepo.Create(pa);
 
+			ViewBag.fullname = fullName;
             ViewBag.Email = email;
 			ViewBag.Username = username;
 			ViewBag.Success = "Đăng ký tài khoản thành công!";
