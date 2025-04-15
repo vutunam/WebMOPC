@@ -1,6 +1,7 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+    var isRole =  HttpContextAccessor.HttpContext.Session.GetInt32("isRole");
 }
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @{
@@ -22,7 +23,7 @@
                              height="100"
                              width="100"
                              id="uploadedAvatar" />
-                        <div class="button-wrapper">
+                        <div class="button-wrapper" hidden>
                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                 <span class="d-none d-sm-block">Tải lên ảnh mới</span>
                                 <i class="bx bx-upload d-block d-sm-none"></i>
@@ -33,7 +34,7 @@
                                        accept="image/png, image/jpeg" />
                             </label>
 
-                            <p class="text-muted mb-0">Chấp nhận định dạng JPG, GIF or PNG. Dung lượng nhỏ hơn 800K</p>
+                            <p class="text-muted mb-0">Chấp nhận định dạng JPG, GIF or PNG. Dung lượng nhỏ hơn 800K</p hidden>
                         </div>
                     </div>
                 </div>
@@ -93,14 +94,17 @@
                                 <label for="address" class="form-label">Địa chỉ</label>
                                 <input type="text" class="form-control" id="acc_address" name="address" placeholder="Address" />
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="" class="form-label">CCCD</label>
-                                <input type="text" class="form-control" id="acc_CCCD" name="CCCD" placeholder="Số căn cước" />
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="" class="form-label">Thẻ bảo hiểm</label>
-                                <input type="text" class="form-control" id="acc_healthInsurance" name="HealthInsurance" placeholder="Số thẻ bảo hiểm" />
-                            </div>
+                            @if (isRole == 2)
+                                {
+                                    <div class="mb-3 col-md-6">
+                                        <label for="" class="form-label">CCCD</label>
+                                        <input type="text" class="form-control" id="acc_CCCD" name="CCCD" placeholder="Số căn cước" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="" class="form-label">Thẻ bảo hiểm</label>
+                                        <input type="text" class="form-control" id="acc_healthInsurance" name="HealthInsurance" placeholder="Số thẻ bảo hiểm" />
+                                    </div>
+                                }
                         </div>
                         <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Lưu thay đổi</button>
@@ -113,3 +117,6 @@
     </div>
 </div>
 
+<script src="~/assets/vendor/Jquery/jquery.min.js"></script>
+<script src="~/js/Notification.js"></script>
+<script src="~/js/Account.js"></script>
