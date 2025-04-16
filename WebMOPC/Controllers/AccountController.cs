@@ -21,30 +21,33 @@ namespace WebMOPC.Controllers
             return View();
         }
 
+        [HttpGet]
         public JsonResult GetAll()
         {
             int isRole = TextUtils.ToInt(HttpContext.Session.GetInt32("isRole"));
             int id = TextUtils.ToInt(HttpContext.Session.GetInt32("ID"));
+            string loginName = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
+            string passWord = TextUtils.ToString(HttpContext.Session.GetString("passWord"));
             try
             {
                 if(isRole == 1 || isRole == 4)
                 {
                     Staff s = staffRepo.GetByID(id);
-                    return Json(new { status = 1, s }, new System.Text.Json.JsonSerializerOptions());
+                    return Json(new { status = 1, s, loginName, passWord }, new System.Text.Json.JsonSerializerOptions());
                 }
                 else if (isRole == 2)
                 {
-                    Patient p = patientRepo.GetByID(id);
-                    return Json(new { status = 1 }, new System.Text.Json.JsonSerializerOptions());
+                    Patient s = patientRepo.GetByID(id);
+                    return Json(new { status = 1, s, loginName, passWord }, new System.Text.Json.JsonSerializerOptions());
                 }
                 else if (isRole == 3)
                 {
-                    Doctor d = doctorRepo.GetByID(id);
-                    return Json(new { status = 1 }, new System.Text.Json.JsonSerializerOptions());
+                    Doctor s = doctorRepo.GetByID(id);
+                    return Json(new { status = 1, s, loginName, passWord }, new System.Text.Json.JsonSerializerOptions());
                 }
                 else
                 {
-                    return Json(new { status = 2 }, new System.Text.Json.JsonSerializerOptions());
+                    return Json(new { status = 2, message = "Lỗi tải dữ liệu!" }, new System.Text.Json.JsonSerializerOptions());
                 }
 
             }
