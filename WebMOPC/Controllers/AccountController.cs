@@ -14,7 +14,7 @@ namespace WebMOPC.Controllers
         private StaffsRepository staffRepo = new StaffsRepository();
         private DoctorsRepository doctorRepo = new DoctorsRepository();
         private PatientsRepository patientRepo = new PatientsRepository();
-
+        private UsersRepository _userRepo = new UsersRepository();
         [HttpGet("AccountInfor")]
         public IActionResult Index()
         {
@@ -30,7 +30,7 @@ namespace WebMOPC.Controllers
             string passWord = TextUtils.ToString(HttpContext.Session.GetString("passWord"));
             try
             {
-                if(isRole == 1 || isRole == 4)
+                if (isRole == 1 || isRole == 4)
                 {
                     Staff s = staffRepo.GetByID(id);
                     return Json(new { status = 1, s, loginName, passWord }, new System.Text.Json.JsonSerializerOptions());
@@ -55,6 +55,50 @@ namespace WebMOPC.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        [HttpPost]
+        public JsonResult ChangePass([FromBody] PassDTO p)
+        {
+            try
+            {
+                int isRole = TextUtils.ToInt(HttpContext.Session.GetInt32("isRole"));
+                int usID = TextUtils.ToInt(HttpContext.Session.GetInt32("userid"));
+                string loginName = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
+                string passWord = TextUtils.ToString(HttpContext.Session.GetString("passWord"));
+
+                if (passWord != "" && p.oldPass != "")
+                {
+                    bool isSame = passWord.Equals(p.oldPass);
+                    if (!isSame)
+                    {
+                        return Json(new { status = 0, message = "Mật khẩu cũ của bạn không chính xác. Vui lòng kiểm tra lại thông tin!" }, new System.Text.Json.JsonSerializerOptions());
+                    }
+                }
+
+                if (p.newPass != "" && p.cfPass != "")
+                {
+                    bool isSame = p.newPass.Equals(p.cfPass);
+                    if (!isSame)
+                    {
+                        return Json(new { status = 0, message = "Mật khẩu mới và mật khẩu xác nhận của bạn không giống nhau. Vui lòng kiểm tra lại!" }, new System.Text.Json.JsonSerializerOptions());
+                    }
+                }
+
+                if (usID > 0)
+                {
+                    User u = _userRepo.GetByID(usID);
+                    u.Password = p.newPass;
+                    _userRepo.Update(u);
+                }
+
+                return Json(new { status = 1, message = "Đổi mật khẩu thành công!" }, new System.Text.Json.JsonSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = 0, message = ex.Message });
+            }
+
         }
     }
 }

@@ -34,7 +34,8 @@ function messageSuccess(message) {
         icon: "success",
         title: message,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
+        backdrop: false
     });
 }
 
@@ -44,7 +45,8 @@ function messageError(message) {
         icon: "error",
         title: message,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
+        backdrop: false
     });
 }
 
@@ -53,7 +55,9 @@ function messageWarning(message) {
         position: "center",
         icon: "warning",
         title: message,
-        showConfirmButton: false
+        showConfirmButton: false,
+        timer: 1500,
+        backdrop: false
     });
 }
 

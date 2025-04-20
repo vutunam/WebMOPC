@@ -9,23 +9,23 @@ function showAlert(message, i) {
     alertBox.style.top = "50%";
     alertBox.style.left = "50%";
     alertBox.style.transform = "translate(-50%, -50%)";
-    
-    alertBox.style.backgroundColor = status; 
-    alertBox.style.color = "#ffffff";  
-    alertBox.style.textTransform = "uppercase"; 
-    alertBox.style.fontSize = "20px";  
-    alertBox.style.padding = "30px"; 
-    alertBox.style.border = "1px solid #c3e6cb"; 
-    alertBox.style.borderRadius = "10px"; 
-    alertBox.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)"; 
+
+    alertBox.style.backgroundColor = status;
+    alertBox.style.color = "#ffffff";
+    alertBox.style.textTransform = "uppercase";
+    alertBox.style.fontSize = "20px";
+    alertBox.style.padding = "30px";
+    alertBox.style.border = "1px solid #c3e6cb";
+    alertBox.style.borderRadius = "10px";
+    alertBox.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
     alertBox.style.zIndex = "9999";
-    alertBox.style.fontWeight = "bold"; 
-    
+    alertBox.style.fontWeight = "bold";
+
     document.body.appendChild(alertBox);
-    
+
     setTimeout(() => {
         alertBox.style.display = "none";
-    }, 2000); 
+    }, 2000);
 }
 
 function messageSuccess(message) {
@@ -34,7 +34,8 @@ function messageSuccess(message) {
         icon: "success",
         title: message,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
+        backdrop: false
     });
 }
 
@@ -44,7 +45,8 @@ function messageError(message) {
         icon: "error",
         title: message,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
+        backdrop: false
     });
 }
 
@@ -53,7 +55,9 @@ function messageWarning(message) {
         position: "center",
         icon: "warning",
         title: message,
-        showConfirmButton: false
+        showConfirmButton: false,
+        timer: 1500,
+        backdrop: false
     });
 }
 
