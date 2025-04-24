@@ -1,4 +1,6 @@
-﻿jQuery(document).ready(function () {
+﻿var _attachFiles = [];
+
+jQuery(document).ready(function () {
     debugger
     const togglePasswordFields = [
         { toggleId: 'toggle-old-password', inputId: 'old_password' },
@@ -69,26 +71,88 @@ function GetAll() {
 }
 
 function ChangeInfor() {
-    var ans = confirm("Bạn có chắc muốn thay đổi mật khẩu không?");
-    if (ans) {
-        $.ajax({
-            url: '/Account/ChangePass',
-            type: 'POST',
-            data: {
-                pass: $('#EmPass').val()
-            },
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
+    var ans = confirm("Bạn có chắc muốn thay đổi thông tin của mình không?");
+    var loginName = $('#acc_Login').val();
+    var fullName = $('#acc_fullname').val();
+    var birthDay = moment($('#acc_birth').val()).format("YYYY-MM-DD");
+    var email = $('#acc_email').val();
+    var gender = $('#acc_gender').val();
+    var isMale = Boolean(Number(gender));
+    var phoneNum = $('#acc_phoneNumber').val(); // check lon hon 10 so
+    var address = $('#acc_address').val();
+    var edu = $('#acc_education').val() ?? "";;
+    var decrip = $('#acc_description').val() ?? "";
+
+    var cccd = $('#acc_CCCD').val();
+    var healthIns = $('#acc_healthInsurance').val() ?? 0;
+
+    if (loginName == "" || loginName == null) {
+        messageError("Vui lòng nhập tên đăng nhập!");
+    }
+
+    if (fullName == "" || fullName == null) {
+        messageError("Vui lòng nhập tên cảu bạn!");
+    }
+
+    if (birthDay == "" || birthDay == null) {
+        messageError("Vui lòng chọn ngày sinh!");
+    }
+
+    if (email == "" || email == null) {
+        messageError("Vui lòng nhập email!");
+    }
+
+    if (phoneNum == "" || phoneNum == null) {
+        messageError("Vui lòng chọn số điện thoại!");
+    }
+
+    if (address == "" || address == null) {
+        messageError("Vui lòng nhập địa chỉ!");
+    }
+
+    if (cccd == "" || cccd == null) {
+        messageError("Vui lòng nhập căn cước!");
+    }
+
+    if (phoneNum.length < 9 || phoneNum.startsWith(0)) {
+        messageError("Vui lòng nhập số điện thoại hợp lệ!");
+        return;
+    }
+    var info = {
+        LoginName: loginName,
+        FullName: fullName,
+        DateOfBirth: birthDay,
+        Gender: isMale,
+        Phone: phoneNum,
+        Address: address,
+        Email: email,
+        Cccd: cccd,
+        HealthInsurance: parseInt(healthIns),
+        Description: decrip,
+        Education: edu,
+    };
+
+    $.ajax({
+        url: '/Account/ChangeInfor',
+        type: 'POST',
+        data: JSON.stringify(info),
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'json',
+        success: function (result) {
+            if (parseInt(result.status) === 1) {
                 messageSuccess(result.message);
                 GetAll();
-            },
-            error: function (err) {
-                messageError(err);
+            } else {
+                messageError(result.message);
             }
-        });
-    }
+        },
+        error: function (err) {
+            messageError(err);
+        }
+    });
+    
 }
+
 
 function ChangePass() {
     debugger
@@ -123,28 +187,52 @@ function ChangePass() {
         newPass: newPass,
         cfPass: cfPass,
     };
-        $.ajax({
-            url: '/Account/ChangePass',
-            type: 'POST',
-            data: JSON.stringify(pass),
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                if (parseInt(result.status) === 1) {
-                    messageSuccess(result.message);
-                    $('#old_password').val("");
-                    $('#new_password').val("");
-                    $('#confirm_password').val("");
-                    GetAll();
-                } else {
-                    messageError(result.message);
-                }
 
-                
-            },
-            error: function (err) {
-                messageError(err);
+    $.ajax({
+        url: '/Account/ChangePass',
+        type: 'POST',
+        data: JSON.stringify(pass),
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'json',
+        success: function (result) {
+            if (parseInt(result.status) === 1) {
+                messageSuccess(result.message);
+                $('#old_password').val("");
+                $('#new_password').val("");
+                $('#confirm_password').val("");
+                GetAll();
+            } else {
+                messageError(result.message);
             }
-        });
+        },
+        error: function (err) {
+            messageError(err);
+        }
+    });
+}
+
+function UploadFile() {
+    debugger
+    var fileInput = $('#upload').val();
     
+    $.ajax({
+        url: '/Account/UploadFile',
+        type: 'GET',
+        data: { img: fileInput},
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'json',
+        success: function (result) {
+            if (parseInt(result.status) === 1) {
+                messageSuccess(result.message);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            } else {
+                messageError(result.message);
+            }
+        },
+        error: function (err) {
+            messageError(err);
+        }
+    });
 }

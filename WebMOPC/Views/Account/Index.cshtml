@@ -46,27 +46,29 @@
             <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
 
                 <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="@Url.Content(imgPath)"
-                        alt="user-avatar"
-                        class="d-block rounded"
-                        height="100"
-                        width="100"
-                        id="uploadedAvatar" />
-                        <div class="button-wrapper" >
-                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                <span class="d-none d-sm-block">Tải lên ảnh mới</span>
-                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                <input type="file"
-                                id="upload"
-                                class="account-file-input"
-                                hidden
-                                accept="image/png, image/jpeg" />
-                            </label>
+                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <img src="@Url.Content(imgPath)"
+                                 alt="user-avatar"
+                                 class="d-block rounded"
+                                 height="100"
+                                 width="100"
+                                 id="uploadedAvatar" />
 
-                            <p class="text-muted mb-0">Chấp nhận định dạng JPG, GIF or PNG. Dung lượng nhỏ hơn 800K</p hidden>
+                            <div class="button-wrapper">
+                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                    <span class="d-none d-sm-block">Tải lên ảnh mới</span>
+                                    <input type="file"
+                                           id="upload"
+                                           name="AttachFiles"
+                                           class="account-file-input"
+                                           accept="image/png, image/jpeg"
+                                           required 
+                                           hidden
+                                           onchange="return UploadFile();" />
+                                </label>
+                                <p class="text-muted mb-0">Chấp nhận JPG, PNG. Dung lượng nhỏ hơn 800KB</p>
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <form id="formAccountSettings" method="POST" onsubmit="return false">
                     <div class="row">
@@ -127,7 +129,7 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="" class="form-label">Thẻ bảo hiểm</label>
-                                <input type="text" class="form-control" id="acc_healthInsurance" name="HealthInsurance" placeholder="Số thẻ bảo hiểm" />
+                                <input type="number" class="form-control" id="acc_healthInsurance" name="HealthInsurance" placeholder="Số thẻ bảo hiểm" />
                             </div>
                         }
 
@@ -152,7 +154,7 @@
                         }
                     </div>
                             <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Lưu thay đổi</button>
+                                <button type="button" class="btn btn-primary me-2" onclick="return ChangeInfor();">Lưu thay đổi</button>
                             </div>
                         </form>
                           </div>
