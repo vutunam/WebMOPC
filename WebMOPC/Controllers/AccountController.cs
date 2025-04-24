@@ -71,9 +71,10 @@ namespace WebMOPC.Controllers
             u.Avatar = $"~/img/{fileName}";
             _userRepo.Update(u);
 
+            string linkImg = $"/img/{fileName}";
             HttpContext.Session.SetString("img", TextUtils.ToString(u.Avatar));
 
-            return Json(new { status = 1, message = "Tải ảnh thành công!" }, new System.Text.Json.JsonSerializerOptions());
+            return Json(new { status = 1, message = "Tải ảnh thành công!", linkImg }, new System.Text.Json.JsonSerializerOptions());
         }
 
         [HttpPost]
