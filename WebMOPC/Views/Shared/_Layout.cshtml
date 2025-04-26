@@ -218,10 +218,7 @@
 			$('.menu-link').each(function () {
 				const href = $(this).attr('href')?.toLowerCase();
 				if (href && currentPath.includes(href)) {
-					// Gỡ active cũ (nếu có)
 					$('.menu-item').removeClass('active');
-
-					// Gắn active vào menu hiện tại
 					$(this).closest('.menu-item').addClass('active');
 				}
 			});
