@@ -22,4 +22,8 @@ public partial class Medication
     public bool? IsDeleted { get; set; }
 
     public string? Note { get; set; }
+
+    public string? SupplierContact { get; set; }
+
+    public string? Unit { get; set; }
 }

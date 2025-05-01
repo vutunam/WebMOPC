@@ -142,7 +142,7 @@ data-template="vertical-menu-template-free">
 						</a>
 					</li>
 					<li class="menu-item">
-						<a href="#" class="menu-link">
+						<a href="@Url.Action("Index", "Medication")" class="menu-link">
 							<i class='bx bx-dna me-2'></i>
 							<div data-i18n="Analytics">Thông tin thuốc</div>
 						</a>
@@ -216,7 +216,7 @@ data-template="vertical-menu-template-free">
 											<div class="d-flex">
 												<div class="flex-shrink-0 me-3">
 													<div class="avatar avatar-online">
-														<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" />
+														<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" id="avatar_drop"/>
 													</div>
 												</div>
 												<div class="flex-grow-1">

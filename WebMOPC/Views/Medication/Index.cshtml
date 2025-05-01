@@ -1,0 +1,124 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+	var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+	var isRole = HttpContextAccessor.HttpContext.Session.GetInt32("isRole");
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="row">
+		<div class="col-12">
+			<div class="card border-top border-primary">
+				<input type="text" id="isRole" value="@isRole" hidden />
+
+				<div class="card-header d-flex justify-content-between align-items-center p-2">
+					<button type="button" id="btn_add_medication" data-bs-toggle="modal" data-bs-target="#modal_medication" onclick="return onEditMedication(0);" class="btn btn-outline-primary btn-sm text-uppercase rounded">
+						<i class="fas fa-plus"></i> Thêm thuốc
+					</button>
+
+					<div class="d-flex gap-2">
+						<button class="btn btn-sm btn-success rounded" id="meExportExcel"><i class="fas fa-file-excel"></i> Xuất excel</button>
+					</div>
+				</div>
+
+				<div class="card-body p-2" style="min-height: 700px;">
+					
+					<form method="get">
+						<div class="row">
+							<div class="col-sm-3 mb-2">
+								<label class="form-label">Trạng thái</label>
+								<select class="form-control select2 form-control-sm" id="meStatus">
+									<option value="0">Tất cả</option>
+									<option value="1">Còn thuốc </option>
+									<option value="2">Đã hết</option>
+									<option value="3">Order</option>
+								</select>
+							</div>
+							<div class="col-sm-5 mb-2">
+								<label class="form-label">Từ khóa</label>
+								<div class="input-group input-group-sm">
+									<input type="text" id="deKeyword" class="form-control" placeholder="Từ khóa ..." />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-success btn-sm" onclick="return GetAllMedication();">
+											<i class="fas fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+
+					<div class="mt-2 border" id="medication_tb"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modal_medication" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<input type="hidden" id="medicationId" />
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title text-white text-uppercase">Thông tin thuốc</h5>
+			</div>
+			<div class="modal-body p-3">
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Mã thuốc</label>
+						<input type="text" class="form-control" id="medCode" placeholder="Nhập mã thuốc..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Tên thuốc</label>
+						<input type="text" class="form-control" id="medName" placeholder="Nhập tên thuốc..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Trạng thái</label>
+						<select id="medStatus" class="form-select">
+							<option value="1">Còn thuốc</option>
+							<option value="2">Đã hết</option>
+							<option value="3">Order</option>
+						</select>
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Số lượng</label>
+						<input type="number" step="1" class="form-control" id="medQuantity" placeholder="Nhập số lượng..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Nhà cung cấp</label>
+						<input type="text" class="form-control" id="medSupplier" placeholder="Nhập tên nhà cung cấp..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Giá</label>
+						<input type="text" class="form-control" id="medPrice" placeholder="Nhập giá..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Đơn vị</label>
+						<input type="text" class="form-control" id="medUnit" placeholder="Nhập đơn vị tính..." />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label class="form-label">Liên hệ NCC</label>
+						<input type="text" class="form-control" id="medSupplierContact" placeholder="Thông tin liên hệ..." />
+					</div>
+					<div class="mb-3 col-md-12">
+						<label class="form-label">Ghi chú</label>
+						<textarea class="form-control" id="medNote" rows="3" placeholder="Nhập ghi chú..."></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer p-2">
+				<button class="btn btn-success btn-sm" id="btn_update_medication" onclick="return SaveInfor();">
+					Cập nhật
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="~/assets/vendor/Jquery/jquery.min.js"></script>
+<script src="~/js/Medication.js"></script>

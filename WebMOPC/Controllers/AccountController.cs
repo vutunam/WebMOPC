@@ -132,7 +132,7 @@ namespace WebMOPC.Controllers
                 string loginName = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                 string passWord = TextUtils.ToString(HttpContext.Session.GetString("passWord"));
 
-                if(isRole == 1 || isRole == 4 || isRole == 3) // nhân viên / admin
+                if(isRole == 3) // nhân viên / admin
                 {
                     if(info.Education == "")
                     {
@@ -148,7 +148,7 @@ namespace WebMOPC.Controllers
                 {
                     if (info.HealthInsurance == 0)
                     {
-                        return Json(new { status = 0, message = "Vui lòng nhập thông tin học vấn!" }, new System.Text.Json.JsonSerializerOptions());
+                        return Json(new { status = 0, message = "Vui lòng nhập thông tin thẻ BHYT!" }, new System.Text.Json.JsonSerializerOptions());
                     }
                 }
 

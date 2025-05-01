@@ -138,6 +138,7 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Supplier).HasMaxLength(150);
+            entity.Property(e => e.Unit).HasMaxLength(150);
         });
 
         modelBuilder.Entity<Patient>(entity =>

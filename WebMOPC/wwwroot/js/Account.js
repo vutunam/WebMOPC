@@ -223,8 +223,10 @@ function UploadFile() {
         dataType: 'json',
         success: function (result) {
             if (parseInt(result.status) === 1) {
+                debugger
                 $('#uploadedAvatar').attr('src', result.linkImg);
                 $('#avatar_layout').attr('src', result.linkImg);
+                $('#avatar_drop').attr('src', result.linkImg);
                 messageSuccess(result.message);
                 
             } else {
