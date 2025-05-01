@@ -18,4 +18,6 @@ public partial class ServiceType
     public DateTime? CreatedDate { get; set; }
 
     public int? DepartmentId { get; set; }
+
+    public string? Description { get; set; }
 }
