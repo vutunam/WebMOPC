@@ -32,8 +32,14 @@
 	<script src="~/assets/vendor/js/helpers.js"></script>
 	<script src="~/assets/js/config.js"></script>
 	<script src="~/js/Notification.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-	<link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
+	<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css" rel="stylesheet">
+
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 
 </head>
@@ -67,7 +73,7 @@
 						<span class="menu-header-text">CHỨC NĂNG CHUNG</span>
 					</li>
 					<li class="menu-item">
-						<a href="#" class="menu-link">
+						<a href="@Url.Action("Index", "Department")" class="menu-link">
 							<i class='bx bx-home-heart me-2'></i>
 							<div data-i18n="Analytics">Phòng khám</div>
 						</a>
@@ -78,10 +84,10 @@
 							<div data-i18n="Analytics">Chức vụ</div>
 						</a>
 					</li>
-					
+
 					<li class="menu-item">
 						<a href="#" class="menu-link">
-							
+
 							<i class='bx bxs-user-detail me-2'></i>
 							<div data-i18n="Analytics">Bác sĩ</div>
 						</a>
@@ -96,6 +102,12 @@
 						<a href="#" class="menu-link">
 							<i class='bx bxs-face me-2'></i>
 							<div data-i18n="Analytics">Bệnh nhân</div>
+						</a>
+					</li>
+					<li class="menu-item">
+						<a href="#" class="menu-link">
+							<i class='bx bxs-coin-stack me-2'></i>
+							<div data-i18n="Analytics">Tài khoản</div>
 						</a>
 					</li>
 					<li class="menu-item">
@@ -141,7 +153,7 @@
 							<div data-i18n="Analytics">Thông tin cá nhân</div>
 						</a>
 					</li>
-					<li class="menu-item">
+					<li class="menu-item" hidden>
 						<a href="#" class="menu-link">
 							<i class="bx bx-cog me-2"></i>
 							<div data-i18n="Analytics">Cài đặt</div>
@@ -172,7 +184,6 @@
 						<ul class="navbar-nav flex-row align-items-center ms-auto">
 							<!-- Place this tag where you want the button to render. -->
 							<!-- Thư -->
-							
 							<!-- Thông báo -->
 							<li class="nav-item navbar-dropdown dropdown-user dropdown">
 								<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -188,12 +199,12 @@
 
 								</ul>
 							</li>
-							
+
 							<!-- Người dùng -->
 							<li class="nav-item navbar-dropdown dropdown-user dropdown">
 								<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
-										<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" id="avatar_layout"/>
+										<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" id="avatar_layout" />
 									</div>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
