@@ -1,0 +1,91 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+    var isRole = HttpContextAccessor.HttpContext.Session.GetInt32("isRole");
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-primary">
+                <input type="text" id="isRole" value="@isRole" hidden />
+                @if (isRole == 4)
+                {
+                    <div class="card-header d-flex justify-content-between align-items-center p-2">
+                        <button type="button" id="btn_add_position" data-bs-toggle="modal" data-bs-target="#modal_position" onclick="return onEditPosition(0);" class="btn btn-outline-primary btn-sm text-uppercase rounded">
+                            <i class="fas fa-plus"></i> Thêm chức vụ
+                        </button>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-success rounded" id="poExportExcel"><i class="fas fa-file-excel"></i> Xuất EXCEL</button>
+                        </div>
+                    </div>
+                }
+                <div class="card-body p-2" style="min-height: 700px;">
+                    <form method="get">
+                        <div class="row">
+                            <div class="col-sm-5 mb-2">
+                                <label class="form-label">Từ khóa</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" id="poKeyword" class="form-control" value="@ViewBag.Keyword" placeholder="Từ khóa ..." />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-success btn-sm" onclick="return GetAllPositions();">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="mt-2 border" id="position_tb"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_position" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <input type="text" id="positionId" value="" hidden />
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-dark text-uppercase">Thông tin chức vụ chi tiết</h5>
+            </div>
+            <div class="modal-body p-2">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="" class="form-label">Mã chức vụ</label>
+                        <input type="text" class="form-control" id="poCode" name="" placeholder="" autofocus />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="deCode" class="form-label">Tên chức vụ</label>
+                        <input class="form-control"
+                               type="text"
+                               id="poName"
+                               value="" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="" class="form-label">Mô tả</label>
+                        <input type="text" class="form-control" id="poDes" name="" placeholder="" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-2">
+                <button class="btn btn-success btn-sm" id="btn_update_position" onclick="return SaveInfor();">
+                    Cập nhật
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/vendor/Jquery/jquery.min.js"></script>
+<script src="~/js/Position.js"></script>

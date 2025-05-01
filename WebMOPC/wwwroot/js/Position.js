@@ -1,8 +1,8 @@
 ﻿jQuery(document).ready(function () {
-    GetAllDepartments();
+    GetAllPositions();
 });
-var dataDepartment;
-var deptId = 0;
+var dataPosition;
+var poId = 0;
 var isRole = parseInt($("#isRole").val());
 
 // Bắt sự kiện enter khi tìm kiếm
@@ -14,42 +14,37 @@ document.addEventListener('keydown', (event) => {
             activeElement.blur();
         }
 
-        GetAllDepartments();
+        GetAllPositions();
     }
 });
 
-function GetAllDepartments() {
+function GetAllPositions() {
     $.ajax({
-        url: '/Department/GetAllDepartments',
+        url: '/Position/GetAllPositions',
         type: 'GET',
         data: {
-            keywword: $('#deKeyword').val(),
+            keywword: $('#poKeyword').val(),
         },
         dataType: 'json',
         contentType: 'application/json;charset=utf-8',
         success: function (data) {
-            dataDepartment = data.departments;
+            dataPosition = data.po;
             let colunms = [
                 {
-                    title: "Mã phòng khám",
+                    title: "Mã chức vụ",
                     field: "Code",
                     width: 200,
-                    formatter: "textarea", hozAlign: "left",
+                    formatter: "textarea", hozAlign: "center",
                 },
                 {
-                    title: "Tên phòng khám",
+                    title: "Tên chức vụ",
                     field: "Name",
                     width: 200,
-                    formatter: "textarea", hozAlign: "left",
+                    formatter: "textarea", hozAlign: "center",
                     bottomCalc: "count",
                     bottomCalcFormatterParams: { precision: false, }
                 },
-                {
-                    title: "Trưởng phòng",
-                    field: "DoctorHead",
-                    width: 200,
-                    formatter: "textarea", hozAlign: "left",
-                },
+                
                 {
                     title: "Ngày tạo",
                     width: 150,
@@ -66,8 +61,8 @@ function GetAllDepartments() {
                     },
                 },
                 {
-                    title: "Vị trí",
-                    field: "Address",
+                    title: "Mô tả",
+                    field: "Description",
                     width: 200,
                     formatter: "textarea", hozAlign: "left",
                 },
@@ -84,10 +79,10 @@ function GetAllDepartments() {
                         formatter: function (cell, formatterParams) {
                             const rowData = cell.getRow().getData();
                             const code = rowData.Code;
-                            let htmlAction = `<button data-bs-toggle="modal" data-bs-target="#modal_department" onclick="return onEditDepartment(${cell.getValue()});" class="btn btn-primary btn-sm")>
+                            let htmlAction = `<button data-bs-toggle="modal" data-bs-target="#modal_position" onclick="return onEditPosition(${cell.getValue()});" class="btn btn-primary btn-sm")>
                     <i class="fas fa-pen"></i>
                 </button>
-                <button onclick="return onDeletedDepartment(${cell.getValue()}, '${code}');" type="button" class="btn btn-danger btn-sm ms-1")>
+                <button onclick="return onDeletedPosition(${cell.getValue()}, '${code}');" type="button" class="btn btn-danger btn-sm ms-1")>
                     <i class="fas fa-trash"></i>
                 </button>`;
                             if (cell.getValue() <= 0) htmlAction = '';
@@ -99,8 +94,8 @@ function GetAllDepartments() {
                 );
             }
 
-            var table = new Tabulator("#department_tb", {
-                data: dataDepartment,
+            var table = new Tabulator("#position_tb", {
+                data: dataPosition,
                 maxHeight: "100%",
                 columnDefaults: {
                     vertAlign: "middle", headerHozAlign: "center", headerWordWrap: true, hozAlign: "center"
@@ -122,7 +117,7 @@ function GetAllDepartments() {
                 columns: colunms,
             });
 
-            document.getElementById("deExportExcel").addEventListener("click", function () {
+            document.getElementById("poExportExcel").addEventListener("click", function () {
                 debugger
                 var columnLayout = table.getColumnLayout();
                 let wscols = [];
@@ -134,8 +129,8 @@ function GetAllDepartments() {
                     wscols.push(size);
                 }
 
-                table.download("xlsx", `DanhSachPhongKham.xlsx`, {
-                    sheetName: "DANH SÁCH PHÒNG KHÁM",
+                table.download("xlsx", `DanhSachChucVu.xlsx`, {
+                    sheetName: "DANH SÁCH CHỨC VỤ",
 
                     documentProcessing: function (workbook) {
 
@@ -143,7 +138,7 @@ function GetAllDepartments() {
                         var ws = workbook.Sheets[ws_name];
 
                         ws['!cols'] = wscols;
-                        ws['!autofilter'] = { ref: "A1:E1" };
+                        ws['!autofilter'] = { ref: "A1:D1" };
 
                         return workbook;
                     },
@@ -157,13 +152,13 @@ function GetAllDepartments() {
     });
 }
 
-function onEditDepartment(id) {
-    $("#departId").val(id);
+function onEditPosition(id) {
+    $("#positionId").val(id);
 
     if (id === 0) Reset();
-    else $("#btn_update_department").html('Cập nhật');
+    else $("#btn_update_position").html('Cập nhật');
     $.ajax({
-        url: '/Department/onEditDepartment',
+        url: '/Position/onEditPosition',
         type: 'GET',
         data: {
             id: id,
@@ -173,18 +168,13 @@ function onEditDepartment(id) {
         success: function (dt) {
             if (parseInt(dt.status) === 1) {
                 debugger
-                var deCode = dt.de.Code != null ? dt.de.Code : "";
-                var deName = dt.de.Name != null ? dt.de.Name : "";
-                var deAddress = dt.de.Address != null ? dt.de.Address : "";
-                var deHead = dt.de.HeadId != null ? parseInt(dt.de.HeadId) : 0;
-                var deCreated = moment(dt.de.CreatedDate).isValid() ? moment(dt.de.CreatedDate).format("YYYY-MM-DD") : '';
+                var poCode = dt.po.Code != null ? dt.po.Code : "";
+                var poName = dt.po.Name != null ? dt.po.Name : "";
+                var poDescription = dt.po.Description != null ? dt.po.Description : "";
 
-
-                $("#deCode").val(deCode);
-                $("#deName").val(deName);
-                $("#deAddress").val(deAddress);
-                $("#deCreatedDate").val(deCreated);
-                $("#deHeadId").val(deHead);
+                $("#poCode").val(poCode);
+                $("#poName").val(poName);
+                $("#poDes").val(poDescription);
 
             } else {
                 messageError(data.message);
@@ -197,13 +187,13 @@ function onEditDepartment(id) {
     });
 }
 
-function onDeletedDepartment(id, code) {
+function onDeletedPosition(id, code) {
     debugger
-    if (!confirm(`Bạn có chắc chắn muốn xóa thông tin phòng khám ${code} không?`)) {
+    if (!confirm(`Bạn có chắc chắn muốn xóa chức vụ ${code} không?`)) {
         return;
     }
     $.ajax({
-        url: '/Department/onDeletedDepartment',
+        url: '/Position/onDeletedPosition',
         type: 'GET',
         data: {
             id: id,
@@ -213,7 +203,7 @@ function onDeletedDepartment(id, code) {
         success: function (data) {
             if (parseInt(data.status) === 1) {
                 messageSuccess(data.message);
-                GetAllDepartments();
+                GetAllPositions();
             } else {
                 messageError(data.message);
             }
@@ -227,61 +217,54 @@ function onDeletedDepartment(id, code) {
 
 function SaveInfor() {
     debugger
-    var id = parseInt($("#departId").val());
+    var id = parseInt($("#positionId").val());
 
     if (id === 0) {
-        if (!confirm(`Bạn có chắc chắn muốn thêm mới thông tin phòng khám không?`)) {
+        if (!confirm(`Bạn có chắc chắn muốn thêm mới thông tin chức vụ không?`)) {
             return;
         }
     } else {
-        if (!confirm(`Bạn có chắc chắn muốn thay đổi thông tin phòng khám không?`)) {
+        if (!confirm(`Bạn có chắc chắn muốn thay đổi thông tin chức vụ không?`)) {
             return;
         }
     }
-    var deCode = $("#deCode").val();
-    var deName = $("#deName").val();
-    var deAddress = $("#deAddress").val();
-    var deCreatedDate = moment($("#deCreatedDate").val()).format("YYYY-MM-DD");
-    var deHeadId = parseInt($("#deHeadId").val());
+    var poCode = $("#poCode").val();
+    var poName = $("#poName").val();
+    var poDescription = $("#poDes").val();
 
-    if (deCode == "" || deCode == null) {
-        alert("Vui lòng nhập mã phòng ban!"); return;
+    if (poCode == "" || poCode == null) {
+        alert("Vui lòng nhập mã chức vụ!"); return;
     }
 
-    if (deName == "" || deName == null) {
-        alert("Vui lòng nhập tên phòng ban!"); return;
+    if (poName == "" || poName == null) {
+        alert("Vui lòng nhập tên chức vụ!"); return;
     }
 
-    if (deCreatedDate == "" || deCreatedDate == null) {
-        alert("Vui lòng chọn ngày lập!"); return;
+    if (poDescription == "" || poDescription == null) {
+        alert("Vui lòng nhập mô tả!"); return;
     }
 
-    if (deAddress == "" || deAddress == null) {
-        alert("Vui lòng nhập vị trí phòng khám!"); return;
-    }
 
     $.ajax({
-        url: '/Department/SaveInfor',
+        url: '/Position/SaveInfor',
         type: 'GET',
         data: {
             id: id,
-            deCode: deCode,
-            deName: deName,
-            deAddress: deAddress,
-            deHeadId: deHeadId,
-            deCreatedDate: deCreatedDate,
+            poCode: poCode,
+            poName: poName,
+            poDescription: poDescription,
         },
         dataType: 'json',
         contentType: 'application/json;charset=utf-8',
         success: function (data) {
             if (parseInt(data.status) === 1) {
 
-                $('#modal_department').removeClass('show').css('display', 'none');
+                $('#modal_position').removeClass('show').css('display', 'none');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
 
                 messageSuccess(data.message);
-                GetAllDepartments();
+                GetAllPositions();
             } else {
                 messageError(data.message);
             }
@@ -294,9 +277,8 @@ function SaveInfor() {
 }
 
 function Reset() {
-    $("#deCode").val('');
-    $("#deName").val('');
-    $("#deCreatedDate").val('');
-    $("#deHeadId").val(0);
-    $("#btn_update_department").html('Thêm mới');
+    $("#poCode").val('');
+    $("#poName").val('');
+    $("#poDes").val('');
+    $("#btn_update_position").html('Thêm mới');
 }

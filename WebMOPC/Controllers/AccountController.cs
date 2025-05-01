@@ -7,6 +7,7 @@ using WebMOPC.Models.DTO;
 using WebMOPC.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebMOPC.Controllers
 {
@@ -76,37 +77,6 @@ namespace WebMOPC.Controllers
 
             return Json(new { status = 1, message = "Tải ảnh thành công!", linkImg }, new System.Text.Json.JsonSerializerOptions());
         }
-
-        [HttpPost]
-        
-
-
-        //public JsonResult UploadFile(string filePath)
-        //{
-        //    try
-        //    {
-        //        int isRole = TextUtils.ToInt(HttpContext.Session.GetInt32("isRole"));
-        //        int usID = TextUtils.ToInt(HttpContext.Session.GetInt32("userid"));
-        //        string loginName = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
-        //        string passWord = TextUtils.ToString(HttpContext.Session.GetString("passWord"));
-        //        string fileName = System.IO.Path.GetFileName(filePath);
-
-        //        User u = _userRepo.GetByID(usID);
-        //        if(u != null)
-        //        {
-        //            u.Avatar = $"~/img/{fileName}";
-        //            _userRepo.Update(u);
-        //        }
-
-        //        HttpContext.Session.SetString("img", TextUtils.ToString($"~/img/{fileName}"));
-
-        //        return Json(new { status = 1, message = "Đổi mật khẩu thành công!" }, new System.Text.Json.JsonSerializerOptions());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { status = 0, message = ex.Message });
-        //    }
-        //}
 
         [HttpPost]
         public JsonResult ChangePass([FromBody] PassDTO p)

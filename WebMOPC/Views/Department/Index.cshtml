@@ -13,33 +13,38 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="card border-top border-primary">
-                <div class="card-header d-flex justify-content-between align-items-center p-2">
-                    <button type="button" id="btn_add_department" data-bs-toggle="modal" data-bs-target="#modal_department" onclick="return onEditDepartment(0);" class="btn btn-outline-primary btn-sm text-uppercase rounded">
-                        <i class="fas fa-plus"></i> Thêm phòng khám
-                    </button>
+				<input type="text" id="isRole" value="@isRole" hidden />
+				@if (isRole == 4)
+				{
+					<div class="card-header d-flex justify-content-between align-items-center p-2">
+						<button type="button" id="btn_add_department" data-bs-toggle="modal" data-bs-target="#modal_department" onclick="return onEditDepartment(0);" class="btn btn-outline-primary btn-sm text-uppercase rounded">
+							<i class="fas fa-plus"></i> Thêm phòng khám
+						</button>
 
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-success rounded" id="deExportExcel"><i class="fas fa-file-excel"></i> Xuất EXCEL</button>
-                    </div>
-                </div>
+						<div class="d-flex gap-2">
+							<button class="btn btn-sm btn-success rounded" id="deExportExcel"><i class="fas fa-file-excel"></i> Xuất EXCEL</button>
+						</div>
+					</div>
+				}
+				<div class="card-body p-2" style="min-height: 700px;">
+					<form method="get">
+						<div class="row">
+							<div class="col-sm-5 mb-2">
+								<label class="form-label">Từ khóa</label>
+								<div class="input-group input-group-sm">
+									<input type="text" id="deKeyword" class="form-control" placeholder="Từ khóa ..." />
+									<div class="input-group-append">
+										<button type="button" class="btn btn-success btn-sm" onclick="return GetAllDepartments();">
+											<i class="fas fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
 
-                <div class="card-body p-2" style="min-height: 700px;">
-                    <form method="get">
-                        <div class="row">
-                            <div class="col-sm-5 mb-2">
-                                <label class="form-label">Từ khóa</label>
-                                <div class="input-group input-group-sm">
-                                    <input type="text" id="deKeyword" class="form-control" value="@ViewBag.Keyword" placeholder="Từ khóa ..." />
-                                    <button class="btn btn-success btn-sm" onclick="return GetAllDepartments();">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="mt-2 border" id="department_tb"></div>
-                </div>
+					<div class="mt-2 border" id="department_tb"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -47,49 +52,48 @@
 
 
 <div class="modal fade" id="modal_department" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <input type="text" id="departId" value="" hidden/>
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-dark text-uppercase">Thông tin phòng khám chi tiết</h5>
-            </div>
-            <div class="modal-body p-2">
-                <div class="row">
-                    <div class="mb-3 col-md-6">
-                        <label for="" class="form-label">Mã phòng khám</label>
-                        <input type="text" class="form-control" id="deCode" name="" placeholder="" autofocus />
-                    </div>
-                    <div class="mb-3 col-md-6">
-                        <label for="deCode" class="form-label">Tên phòng khám</label>
-                        <input class="form-control"
-                               type="text"
-                               id="deName"
-                               value=""
-                                />
-                    </div>
-                    <div class="mb-3 col-md-6">
-                        <label for="" class="form-label">Ngày lập</label>
-                        <input type="date" id="deCreatedDate" class="form-control">
-                    </div>
-                    <div class="mb-3 col-md-6">
-                        <label for="" class="form-label">Trưởng phòng</label>
-                        <select id="deHeadId" class="select2 form-select" asp-items="@ViewBag.Doctor">
-                            <option value="0">--Không có--</option>
-                        </select>
-                    </div>
-                    <div class="mb-3 col-md-12">
-                        <label for="" class="form-label">Vị Trí</label>
-                        <input type="text" class="form-control" id="deAddress" name="" placeholder="" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer p-2">
-                <button class="btn btn-success btn-sm" id="btn_update_department" onclick="return SaveInfor();">
-                    Cập nhật
-                </button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<input type="text" id="departId" value="" hidden />
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title text-dark text-uppercase">Thông tin phòng khám chi tiết</h5>
+			</div>
+			<div class="modal-body p-2">
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label for="" class="form-label">Mã phòng khám</label>
+						<input type="text" class="form-control" id="deCode" name="" placeholder="" autofocus />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label for="deCode" class="form-label">Tên phòng khám</label>
+						<input class="form-control"
+							   type="text"
+							   id="deName"
+							   value="" />
+					</div>
+					<div class="mb-3 col-md-6">
+						<label for="" class="form-label">Ngày lập</label>
+						<input type="date" id="deCreatedDate" class="form-control">
+					</div>
+					<div class="mb-3 col-md-6">
+						<label for="" class="form-label">Trưởng phòng</label>
+						<select id="deHeadId" class="select2 form-select" asp-items="@ViewBag.Doctor">
+							<option value="0">--Không có--</option>
+						</select>
+					</div>
+					<div class="mb-3 col-md-12">
+						<label for="" class="form-label">Vị Trí</label>
+						<input type="text" class="form-control" id="deAddress" name="" placeholder="" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer p-2">
+				<button class="btn btn-success btn-sm" id="btn_update_department" onclick="return SaveInfor();">
+					Cập nhật
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="~/assets/vendor/Jquery/jquery.min.js"></script>

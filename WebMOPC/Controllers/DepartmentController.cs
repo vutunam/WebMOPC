@@ -11,12 +11,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebMOPC.Controllers
 {
+
     public class DepartmentController : Controller
     {
         DepartmentsRepository departmentRepo = new DepartmentsRepository();
         DoctorsRepository doctorRepo = new DoctorsRepository();
         StaffsRepository staffRepo = new StaffsRepository();
-        [HttpGet("phongkham")]
+        ServiceTypeRepository serviceRepo = new ServiceTypeRepository();
+
+        [HttpGet("phongban")]
         public IActionResult Index()
         {
             ViewBag.Doctor = new SelectList(doctorRepo.GetAll().Where(x => x.IsDeleted == false), "Id", "FullName");
@@ -32,7 +35,7 @@ namespace WebMOPC.Controllers
                   new string[] { "@FilterText" }
                   , new object[] { keywword });
 
-                return Json(new { status = 0, departments }, new System.Text.Json.JsonSerializerOptions());
+                return Json(new { status = 1, departments }, new System.Text.Json.JsonSerializerOptions());
             }
             catch (Exception ex)
             {
@@ -46,6 +49,14 @@ namespace WebMOPC.Controllers
             {
                 if (id > 0)
                 {
+                    var docCheck = doctorRepo.GetAll().Where(x => x.DepartmentId == id).FirstOrDefault();
+                    var staffcCheck = staffRepo.GetAll().Where(x => x.DepartmentId == id).FirstOrDefault();
+                    var servicecCheck = serviceRepo.GetAll().Where(x => x.DepartmentId == id).FirstOrDefault();
+                    if (docCheck != null || staffcCheck != null || servicecCheck != null)
+                    {
+                        return Json(new { status = 0, message = $"Phòng khám bạn chọn đang được dử dụng. Vui lòng kiểm tra trước khi xóa!" }, new System.Text.Json.JsonSerializerOptions());
+                    }
+
                     Department de = departmentRepo.GetByID(id);
                     de.IsDeleted = true;
                     departmentRepo.Update(de);
@@ -90,8 +101,7 @@ namespace WebMOPC.Controllers
             {
                 if (id > 0)
                 {
-
-
+                    
 
                     Department de = departmentRepo.GetByID(id);
                     de.Code = deCode;

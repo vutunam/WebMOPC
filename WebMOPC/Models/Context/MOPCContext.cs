@@ -36,6 +36,8 @@ public partial class MopcContext : DbContext
 
     public virtual DbSet<Prescription> Prescriptions { get; set; }
 
+    public virtual DbSet<ServiceType> ServiceTypes { get; set; }
+
     public virtual DbSet<Staff> Staffs { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -176,6 +178,18 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
             entity.Property(e => e.MedicationId).HasColumnName("MedicationID");
+        });
+
+        modelBuilder.Entity<ServiceType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ServiceT__3214EC27C7F5F435");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Code).HasMaxLength(150);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+            entity.Property(e => e.Name).HasMaxLength(150);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<Staff>(entity =>

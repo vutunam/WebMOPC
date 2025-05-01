@@ -1,15 +1,16 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
 	var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+	var isRole = HttpContextAccessor.HttpContext.Session.GetInt32("isRole");
 }
 <!DOCTYPE html>
 
 <html lang="en"
-	  class="light-style layout-menu-fixed"
-	  dir="ltr"
-	  data-theme="theme-default"
-	  data-assets-path="~/assets/"
-	  data-template="vertical-menu-template-free">
+class="light-style layout-menu-fixed"
+dir="ltr"
+data-theme="theme-default"
+data-assets-path="~/assets/"
+data-template="vertical-menu-template-free">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -22,7 +23,7 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		  rel="stylesheet">
+	rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
 	<link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -78,13 +79,15 @@
 							<div data-i18n="Analytics">Phòng khám</div>
 						</a>
 					</li>
-					<li class="menu-item">
-						<a href="#" class="menu-link">
-							<i class='bx bx-git-repo-forked me-2'></i>
-							<div data-i18n="Analytics">Chức vụ</div>
-						</a>
-					</li>
-
+					@if (isRole == 4 || isRole == 3 || isRole == 1)
+					{
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "Position")" class="menu-link">
+								<i class='bx bx-git-repo-forked me-2'></i>
+								<div data-i18n="Analytics">Chức vụ</div>
+							</a>
+						</li>
+					}
 					<li class="menu-item">
 						<a href="#" class="menu-link">
 
