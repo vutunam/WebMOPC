@@ -7,7 +7,7 @@ public partial class MedicalAppointment
 {
     public int Id { get; set; }
 
-    public DateTime? MedicalDate { get; set; }
+    public DateTime? MedicalDateStart { get; set; }
 
     public string? Note { get; set; }
 
@@ -22,4 +22,10 @@ public partial class MedicalAppointment
     public int? DiagnoseId { get; set; }
 
     public int? DoctorId { get; set; }
+
+    public string? DepartmentId { get; set; }
+
+    public DateTime? MedicalDateEnd { get; set; }
+
+    public bool? MedicalType { get; set; }
 }

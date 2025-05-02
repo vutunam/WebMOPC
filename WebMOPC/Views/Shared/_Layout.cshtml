@@ -37,12 +37,10 @@ data-template="vertical-menu-template-free">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
+	<script src="~/js/index.global.js"></script>
+	<script src="~/js/index.global.min.js"></script>
 	<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css" rel="stylesheet">
-
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
-
 </head>
 
 <body>
@@ -108,7 +106,7 @@ data-template="vertical-menu-template-free">
 						</a>
 					</li>
 					<li class="menu-item">
-						<a href="#" class="menu-link">
+						<a href="@Url.Action("Index", "AccManager")" class="menu-link">
 							<i class='bx bxs-coin-stack me-2'></i>
 							<div data-i18n="Analytics">Tài khoản</div>
 						</a>
@@ -123,9 +121,9 @@ data-template="vertical-menu-template-free">
 						<span class="menu-header-text">Khám chữa bệnh</span>
 					</li>
 					<li class="menu-item">
-						<a href="#" class="menu-link">
+						<a href="@Url.Action("Index", "MedicalAppointment")" class="menu-link">
 							<i class='bx bxs-calendar me-2'></i>
-							<div data-i18n="Analytics">Lịch khám bệnh</div>
+							<div data-i18n="Analytics">Khám bệnh</div>
 						</a>
 					</li>
 					<li class="menu-item">

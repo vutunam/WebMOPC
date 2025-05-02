@@ -146,10 +146,10 @@ function GetAllBanks() {
                 langs: {
                     "vi": {
                         "pagination": {
-                            "first": "Trang đầu",
-                            "last": "Trang cuối",
-                            "prev": "Trước",
-                            "next": "Sau",
+                            "first": "<<",
+                            "last": ">>",
+                            "prev": "<",
+                            "next": ">",
                         }
                     }
                 },

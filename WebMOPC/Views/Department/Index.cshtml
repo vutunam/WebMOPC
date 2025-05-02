@@ -1,4 +1,5 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
 	var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
 	var isRole = HttpContextAccessor.HttpContext.Session.GetInt32("isRole");

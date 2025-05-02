@@ -122,10 +122,15 @@ public partial class MopcContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__MedicalA__3214EC27BA98E1E4");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DepartmentId)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("DepartmentID");
             entity.Property(e => e.DiagnoseId).HasColumnName("DiagnoseID");
             entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
-            entity.Property(e => e.MedicalDate).HasColumnType("datetime");
+            entity.Property(e => e.MedicalDateEnd).HasColumnType("datetime");
+            entity.Property(e => e.MedicalDateStart).HasColumnType("datetime");
             entity.Property(e => e.PatientId).HasColumnName("PatientID");
         });
 
