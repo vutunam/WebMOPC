@@ -66,23 +66,23 @@
 			<div class="modal-body p-2">
 				<div class="row">
 					<div class="mb-3 col-md-6">
-						<label for="" class="form-label">Mã dịch vụ</label>
+						<label for="" class="form-label">Mã dịch vụ <span class="text-danger">(*)</span></label>
 						<input type="text" class="form-control" id="seCode" name="" placeholder="Nhập mã dịch vụ ..." autofocus />
 					</div>
 					<div class="mb-3 col-md-6">
-						<label for="" class="form-label">Tên dịch vụ</label>
+						<label for="" class="form-label">Tên dịch vụ <span class="text-danger">(*)</span></label>
 						<input type="text" class="form-control" id="seName" name="" placeholder="Nhập tên dịch vụ ..." autofocus />
 					</div>
 
 					<div class="mb-3 col-md-6">
-						<label for="deCode" class="form-label">Giá dịch vụ</label>
+						<label for="deCode" class="form-label">Giá dịch vụ <span class="text-danger">(*)</span></label>
 						<input class="form-control"
 							   type="text"
 							   id="sePrice"
 							   value="" placeholder="Nhập giá dịch vụ ..." />
 					</div>
 					<div class="mb-3 col-md-6">
-						<label for="" class="form-label">Phòng phụ trách</label>
+						<label for="" class="form-label">Phòng phụ trách </label>
 						<select id="seDepart" class="select2 form-select" asp-items="@ViewBag.Department">
 							<option value="0">--Không có --</option>
 						</select>

@@ -52,14 +52,15 @@ public partial class MopcContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Banks__3214EC27F873EF09");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Bin).HasMaxLength(550);
             entity.Property(e => e.Code).HasMaxLength(550);
             entity.Property(e => e.Logo).HasMaxLength(550);
             entity.Property(e => e.Name).HasMaxLength(550);
             entity.Property(e => e.ShortName).HasMaxLength(550);
+            entity.Property(e => e.Stk)
+                .HasMaxLength(550)
+                .HasColumnName("STK");
         });
 
         modelBuilder.Entity<Department>(entity =>

@@ -16,4 +16,8 @@ public partial class Bank
     public string? ShortName { get; set; }
 
     public string? Logo { get; set; }
+
+    public string? Stk { get; set; }
+
+    public bool? IsUsed { get; set; }
 }
