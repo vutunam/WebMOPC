@@ -78,6 +78,14 @@ namespace WebMOPC.Controllers
             {
                 if (id > 0)
                 {
+                    List<Bank> banks = bankRepo.GetAll().ToList();
+                    foreach (Bank bk in banks)
+                    {
+                        bk.IsUsed = false;
+                        bankRepo.Update(bk);
+                    }
+
+
                     Bank ba = bankRepo.GetByID(id);
                     ba.IsUsed = use == 1 ? true : false;
                     bankRepo.Update(ba);

@@ -190,7 +190,7 @@ namespace WebMOPC.Controllers
                     doctorRepo.Update(p);
                 }
 
-                if (isRole == 3) // bệnh nhân
+                if (isRole == 2) // bệnh nhân
                 {
                     User u = _userRepo.GetByID(usID);
                     u.LoginName = info.LoginName;

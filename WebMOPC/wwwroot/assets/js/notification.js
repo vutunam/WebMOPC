@@ -35,7 +35,7 @@ function messageSuccess(message) {
         title: message,
         showConfirmButton: false,
         timer: 1500,
-        backdrop: false
+        //backdrop: false
     });
 }
 
@@ -46,7 +46,7 @@ function messageError(message) {
         title: message,
         showConfirmButton: false,
         timer: 1500,
-        backdrop: false
+        //backdrop: false
     });
 }
 
@@ -57,7 +57,7 @@ function messageWarning(message) {
         title: message,
         showConfirmButton: false,
         timer: 1500,
-        backdrop: false
+        //backdrop: false
     });
 }
 

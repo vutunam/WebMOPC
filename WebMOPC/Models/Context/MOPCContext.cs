@@ -111,6 +111,7 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.Code).HasMaxLength(250);
             entity.Property(e => e.CreatedBy).HasMaxLength(250);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.MedicalAppointmentId).HasColumnName("MedicalAppointmentID");
             entity.Property(e => e.Name).HasMaxLength(250);
             entity.Property(e => e.PaymentBankId).HasColumnName("PaymentBankID");
             entity.Property(e => e.PrescriptionId).HasColumnName("PrescriptionID");
@@ -128,7 +129,6 @@ public partial class MopcContext : DbContext
                 .HasColumnName("DepartmentID");
             entity.Property(e => e.DiagnoseId).HasColumnName("DiagnoseID");
             entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
-            entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
             entity.Property(e => e.MedicalDateEnd).HasColumnType("datetime");
             entity.Property(e => e.MedicalDateStart).HasColumnType("datetime");
             entity.Property(e => e.PatientId).HasColumnName("PatientID");

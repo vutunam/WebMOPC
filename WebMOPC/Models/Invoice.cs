@@ -30,4 +30,6 @@ public partial class Invoice
     public int? PaymentType { get; set; }
 
     public int? PrescriptionId { get; set; }
+
+    public int? MedicalAppointmentId { get; set; }
 }

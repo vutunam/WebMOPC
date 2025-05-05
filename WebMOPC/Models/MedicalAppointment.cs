@@ -17,8 +17,6 @@ public partial class MedicalAppointment
 
     public int? Status { get; set; }
 
-    public int? InvoiceId { get; set; }
-
     public int? DiagnoseId { get; set; }
 
     public int? DoctorId { get; set; }

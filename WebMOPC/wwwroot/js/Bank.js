@@ -32,9 +32,23 @@ function GetAllBanks() {
             dataBank = data.bank;
             let colunms = [
                 {
+                    title: "Sử dụng",
+                    field: "IsUsed",
+                    width: 150,
+                    formatter: function (cell) {
+                        var value = cell.getValue();
+                        if (value == false) {
+                            return `<span style="color:red;">x</span>`;
+                        } else {
+                            return `<span style="color:green;">Có thể giao dịch</span>`;
+                        }
+                        return value;
+                    }, hozAlign: "center",
+                },
+                {
                     title: "Logo",
                     field: "Logo",
-                    width: 200,
+                    width: 120,
                     hozAlign: "center",
                     formatter: function (cell, formatterParams, onRendered) {
                         var logoUrl = cell.getValue();
@@ -74,7 +88,7 @@ function GetAllBanks() {
                 {
                     title: "Tài khoản thanh toán bệnh viện",
                     field: "Stk",
-                    width: 280,
+                    width: 250,
                     formatter: function (cell) {
                         var value = cell.getValue();
                         if (!value || value === "" || value === "0") {
@@ -85,6 +99,8 @@ function GetAllBanks() {
                         return value;
                     }, hozAlign: "center",
                 },
+                
+
             ];
 
             if (isRole != -1) {
@@ -248,10 +264,10 @@ function onEditSTK(id, logo, stk) {
         input: 'text',
         inputValue: (stk && stk !== "0") ? stk : '',
         inputPlaceholder: 'Ví dụ: 123456789',
-        showCancelButton: true,
+        //showCancelButton: true,
         confirmButtonText: 'Cập nhật',
-        cancelButtonText: 'Hủy',
-        backdrop: false,
+        //cancelButtonText: 'Hủy',
+        //backdrop: false,
         inputValidator: (value) => {
             if (!value) {
                 return 'Bạn phải nhập số tài khoản!';
@@ -308,9 +324,9 @@ function onOpenQR(bin, stk, print) {
         html: `<div id="qrLoader" style="text-align:center;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>`,
         showConfirmButton: false,
         allowOutsideClick: true,
-        showCancelButton: true,
-        cancelButtonText: 'Đóng',
-        backdrop: false,
+        //showCancelButton: true,
+        //cancelButtonText: 'Đóng',
+        //backdrop: false,
         width: 500,
         didOpen: () => {
             const img = new Image();
