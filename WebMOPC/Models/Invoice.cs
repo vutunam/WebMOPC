@@ -11,10 +11,6 @@ public partial class Invoice
 
     public string? Name { get; set; }
 
-    public string? CreatedBy { get; set; }
-
-    public string? Contents { get; set; }
-
     public DateTime? CreatedDate { get; set; }
 
     public bool? IsDeleted { get; set; }
@@ -23,13 +19,9 @@ public partial class Invoice
 
     public string? Note { get; set; }
 
-    public int? ServiceTypeId { get; set; }
-
     public int? PaymentBankId { get; set; }
 
     public int? PaymentType { get; set; }
-
-    public int? PrescriptionId { get; set; }
 
     public int? MedicalAppointmentId { get; set; }
 }

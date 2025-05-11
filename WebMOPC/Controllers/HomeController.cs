@@ -6,6 +6,12 @@ using WebMOPC.Models;
 using WebMOPC.Models.DTO;
 using WebMOPC.Repository;
 
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
 namespace WebMOPC.Controllers
 {
 	public class HomeController : Controller
@@ -15,12 +21,63 @@ namespace WebMOPC.Controllers
 		public StaffsRepository _staffRepo = new StaffsRepository();
 		public PatientsRepository _patienRepo = new PatientsRepository();
 		public DoctorsRepository _doctorRepo = new DoctorsRepository();
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}	
 
-		[HttpGet]
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        {
+            _logger = logger;
+            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
+        }
+
+        #region
+
+        public class ChatRequestModel
+        {
+            public string Message { get; set; }
+        }
+
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChatWithGPT([FromForm] ChatRequestModel request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var apiKey = _configuration["OpenAI:ApiKey"];
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var payload = new
+            {
+                model = "gpt-3.5-turbo",
+                messages = new[]
+                {
+            new { role = "user", content = request.Message }  // Tin nhắn có thể là tiếng Việt
+        }
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
+            if (!response.IsSuccessStatusCode)
+                return Content("Lỗi gọi API GPT");
+
+            var json = await response.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(json);
+            var result = doc.RootElement
+                .GetProperty("choices")[0]
+                .GetProperty("message")
+                .GetProperty("content")
+                .GetString();
+
+            return Content(result);  // Kết quả từ GPT sẽ được trả về và có thể là tiếng Việt
+        }
+
+        #endregion
+
+        [HttpGet]
 		public IActionResult Index()
 		{
 			if (HttpContext.Session.GetInt32("userid") != null)

@@ -26,6 +26,8 @@ public partial class MopcContext : DbContext
 
     public virtual DbSet<Invoice> Invoices { get; set; }
 
+    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+
     public virtual DbSet<MedicalAppointment> MedicalAppointments { get; set; }
 
     public virtual DbSet<Medication> Medications { get; set; }
@@ -109,12 +111,20 @@ public partial class MopcContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Code).HasMaxLength(250);
-            entity.Property(e => e.CreatedBy).HasMaxLength(250);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.MedicalAppointmentId).HasColumnName("MedicalAppointmentID");
             entity.Property(e => e.Name).HasMaxLength(250);
             entity.Property(e => e.PaymentBankId).HasColumnName("PaymentBankID");
-            entity.Property(e => e.PrescriptionId).HasColumnName("PrescriptionID");
+        });
+
+        modelBuilder.Entity<InvoiceDetail>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+            entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
+            entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ServiceTypeId).HasColumnName("ServiceTypeID");
         });
 
@@ -123,12 +133,8 @@ public partial class MopcContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__MedicalA__3214EC27BA98E1E4");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.DepartmentId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("DepartmentID");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.DiagnoseId).HasColumnName("DiagnoseID");
-            entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
             entity.Property(e => e.MedicalDateEnd).HasColumnType("datetime");
             entity.Property(e => e.MedicalDateStart).HasColumnType("datetime");
             entity.Property(e => e.PatientId).HasColumnName("PatientID");
@@ -185,6 +191,7 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
             entity.Property(e => e.MedicationId).HasColumnName("MedicationID");
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<ServiceType>(entity =>

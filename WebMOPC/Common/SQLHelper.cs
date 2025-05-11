@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Data;
 using WebMOPC.Common;
 using Microsoft.Data.SqlClient;
+using System.Dynamic;
 
 namespace WebMOPC.Common
 {
@@ -163,7 +164,53 @@ namespace WebMOPC.Common
             }
             return r;
         }
+        public static List<List<dynamic>> ProcedureToDynamicLists(string procedureName, string[] paramName, object[] paramValue)
+        {
+            List<List<dynamic>> resultLists = new List<List<dynamic>>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(procedureName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    if (paramName != null)
+                    {
+                        for (int i = 0; i < paramName.Length; i++)
+                        {
+                            cmd.Parameters.Add(new SqlParameter(paramName[i], paramValue[i]));
+                        }
+                    }
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataSet ds = new DataSet();
+                        adapter.Fill(ds);
+
+                        foreach (DataTable table in ds.Tables)
+                        {
+                            List<dynamic> dynamicList = new List<dynamic>();
+
+                            foreach (DataRow row in table.Rows)
+                            {
+                                IDictionary<string, object> expando = new ExpandoObject();
+                                foreach (DataColumn col in table.Columns)
+                                {
+                                    expando[col.ColumnName] = row[col];
+                                }
+                                dynamicList.Add(expando);
+                            }
+
+                            resultLists.Add(dynamicList);
+                        }
+                    }
+                }
+            }
+
+            return resultLists;
+        }
     }
+
 
     public class ResultQuery
     {

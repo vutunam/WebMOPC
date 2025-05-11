@@ -16,4 +16,6 @@ public partial class Prescription
     public DateTime? CreatedDate { get; set; }
 
     public string? CreatedBy { get; set; }
+
+    public decimal? Price { get; set; }
 }

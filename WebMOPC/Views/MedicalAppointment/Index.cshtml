@@ -15,21 +15,24 @@
 	<div class="row">
 		<div class="col-xl-12">
 			<div class="nav-align-top mb-2">
+				<input type="text" id="isRole" value="@isRole" hidden />
+				<input type="text" id="ivdID" value="0" hidden />
+				<input type="text" id="ivID" value="0" hidden />
 				<ul class="nav nav-pills mb-3 nav-fill" role="tablist">
 					<li class="nav-item">
-						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home" aria-selected="true">
+						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home" aria-selected="true" onclick="return SetCalendar();">
 							<i class="fa-solid fa-calendar-days"></i> Lịch khám
 						</button>
 					</li>
 					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false">
+						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false" onclick="return GetAllMedicalappointment();">
 							<i class="tf-icons bx bx-message-square"></i> Tổng hợp
 						</button>
 					</li>
 				</ul>
-				<div class="tab-content p-2">
+				<div class="tab-content p-2" style="min-height: 74vh;">
 					<div class="tab-pane fade active show" id="navs-pills-justified-home" role="tabpanel" style="min-height:500px;">
-						<div class="card-body p-0" style="min-height: 700px;">
+						<div class="card-body p-0" style="height: 700px;">
 							<div class="row">
 								<div class="col-12">
 									<div id="calendar" class="p-2 rounded" style="max-height: 700px; font-size: 14px;"></div>
@@ -39,49 +42,6 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="navs-pills-justified-messages" role="tabpanel">
-						<form method="get">
-							<div class="row">
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Ngày bắt đầu</label>
-									<input type="date" class="form-control form-control-sm" id="startDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-								</div>
-
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Ngày kết thúc</label>
-									<input type="date" class="form-control form-control-sm" id="endDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-								</div>
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Phòng khám</label>
-									<select class="form-control select2 form-control-sm" asp-items="@ViewBag.Department" id="appDepartment">
-										<option value="">Tất cả</option>
-									</select>
-								</div>
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Bác sĩ</label>
-									<select class="form-control select2 form-control-sm"  id="appDoctor">
-										<option value="">Tất cả</option>
-									</select>
-								</div>
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Dịch vụ</label>
-									<select class="form-control select2 form-control-sm" id="appSevice">
-										<option value="">Tất cả</option>
-									</select>
-								</div>
-								<div class="col-sm-2 mb-2">
-									<label class="form-label">Từ khóa</label>
-									<div class="input-group input-group-sm">
-										<input type="text" id="deKeyword" class="form-control" placeholder="Từ khóa ..." />
-										<div class="input-group-append">
-											<button type="button" class="btn btn-success btn-sm" onclick="return GetAllDepartments();">
-												<i class="fas fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-
 						<div class="mt-2 border" id="department_tb"></div>
 					</div>
 				</div>
@@ -90,6 +50,81 @@
 	</div>
 </div>
 
+
+
+<div class="modal fade" id="modal_department" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<input type="text" id="departId" value="" hidden />
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title text-white text-uppercase">Thông tin hóa đơn lịch khám</h5>
+			</div>
+			<div class="modal-body p-2">
+				<div class="row">
+					<div class="col-12">
+						<label for="invoiceName">Tên hóa đơn</label>
+						<input type="text" class="form-control" id="invoiceName" name="invoiceName" placeholder="Nhập tên hóa đơn">
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<label for="note">Ghi chú</label>
+						<textarea class="form-control" id="note" name="note" rows="3" placeholder="Nhập ghi chú"></textarea>
+					</div>
+
+				</div>
+				<div id="tb" class="row mt-2">
+					<div class="col-12">
+						Bảng kê dịch vụ: 
+						<button class="btn btn-sm btn-success rounded" id="deExportExcel" onclick="return addService();"><i class="fas fa-file-excel"></i> Thêm dịch vụ</button>
+						<div class="mt-2 border border-primary" id="tbSevice"></div>
+					</div>
+				</div>
+
+				<div id="tb1" class="row mt-2">
+					<div class="col-12">
+						Bảng kê thuốc:
+						<button class="btn btn-sm btn-success rounded" id="deExportExcel" onclick="return addThuoc();"><i class="fas fa-file-excel"></i> Thêm thuốc</button>
+						<div class="mt-2 border border-primary" id="tbThuoc"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer p-2">
+				<button class="btn btn-success btn-sm" id="btn_update_department" onclick="return saveInvoidTb1();">
+					Tạo hóa đơn
+				</button>
+				<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+					Đóng
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div hidden>
+	<select id="serviceTemplate" class="d-none">
+		@foreach (var item in ViewBag.service)
+		{
+			<option value="@item.Value">@item.Text</option>
+		}
+	</select>
+
+	<select id="doctorTemplate" class="d-none">
+		@foreach (var item in ViewBag.doctor)
+		{
+			<option value="@item.Value">@item.Text</option>
+		}
+	</select>
+
+	<select id="medicaTemplate" class="d-none">
+		@foreach (var item in ViewBag.Medica)
+		{
+			<option value="@item.Value">@item.Text</option>
+		}
+	</select>
+</div>
 
 <script src="~/assets/vendor/Jquery/jquery.min.js"></script>
 
