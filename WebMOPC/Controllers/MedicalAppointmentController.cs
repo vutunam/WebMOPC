@@ -131,8 +131,6 @@ namespace WebMOPC.Controllers
         {
             try
             {
-                Random random = new Random();
-                int randomCode = random.Next(100000, 1000000);
 
                 int id = TextUtils.ToInt(HttpContext.Session.GetInt32("ID"));
                 MedicalAppointment mea = new MedicalAppointment();
@@ -149,7 +147,7 @@ namespace WebMOPC.Controllers
                 Bank b = baRepo.GetAll().Where(x => x.Bin == bin).FirstOrDefault();
 
                 Invoice inv = new Invoice();
-                inv.Code = $"HD{random}";
+                inv.Code = $"HD{Guid.NewGuid().ToString("N").Substring(0, 8)}";
                 inv.Name = "Hóa đơn đặt cọc lịch khám";
                 inv.Note = "Đã đặt cọc 50.000 VNĐ";
                 inv.PaymentBankId = b.Id > 0 ? b.Id : 0;
@@ -509,7 +507,7 @@ namespace WebMOPC.Controllers
                 {
                     List<ServiceViewModel> serviceList = JsonConvert.DeserializeObject<List<ServiceViewModel>>(dataSv);
                     Invoice i = new Invoice();
-                    i.Code = Guid.NewGuid().ToString("N").Substring(0, 8);
+                    i.Code = $"HD{Guid.NewGuid().ToString("N").Substring(0, 8)}";
                     i.Name = invoiceName;
                     i.CreatedDate = DateTime.Now;
                     i.IsDeleted = false;

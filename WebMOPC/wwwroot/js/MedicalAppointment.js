@@ -145,6 +145,11 @@ async function checkPaid(randomCode, stk) {
     }
 }
 
+function load2() {
+    GetAllMedicalappointment();
+    GetAllMedicalappointment();
+}
+
 function generateRandomCode(length = 6) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = '';
