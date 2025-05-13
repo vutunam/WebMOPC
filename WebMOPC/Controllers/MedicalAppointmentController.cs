@@ -528,6 +528,15 @@ namespace WebMOPC.Controllers
                             inRepo.Create(inv);
                             return Json(new { status = 0, message = $"Thuốc đã hết vui lòng kiểm tra lại!" }, new System.Text.Json.JsonSerializerOptions());
                         }
+                        else
+                        {
+                            medic.Quantity = count;
+                            if(count == 0)
+                            {
+                                medic.Status = 0;
+                            }
+                            medicaRepo.Update(medic);
+                        }
                         Prescription pep = new Prescription();
                         pep.InvoiceId = i.Id;
                         pep.MedicationId = TextUtils.ToInt(item.id);

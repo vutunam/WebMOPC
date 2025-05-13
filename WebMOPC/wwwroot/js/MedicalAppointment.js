@@ -215,8 +215,8 @@ function CreatQR(note) {
                             }, 1000);
                             let pay = false;
                             const paymentChecker = setInterval(async () => {
-                                //const isPay = await checkPaid(randomCode, data.stk);
-                                const isPay = true;
+                                const isPay = await checkPaid(randomCode, data.stk);
+                                //const isPay = true;
                                 if (isPay) {
                                     clearInterval(interval);
                                     clearInterval(paymentChecker);
@@ -226,7 +226,7 @@ function CreatQR(note) {
                                     makeCalendar(note, data.bin);
                                     GetAllMedicalappointment();
                                 }
-                            }, /*30000*/1000);
+                            }, 30000);
 
                             const timeout = setTimeout(() => {
                                 clearInterval(paymentChecker);
@@ -544,60 +544,189 @@ function deleteCalendar(id) {
 }
 
     function setCalendar(id) {
-        const now = moment();
+    //    const now = moment();
 
-        const currentDateStr = now.format('YYYY-MM-DD');
-        const currentHour = now.hour();
+    //    const currentDateStr = now.format('YYYY-MM-DD');
+    //    const currentHour = now.hour();
 
-        const htmlContent = `
-            <label class="swal2-input-label">Chọn ngày:</label>
-            <input type="date" id="selectedDate" class="swal2-input" value="${currentDateStr}" min="${currentDateStr}">
+    //    const htmlContent = `
+    //        <label class="swal2-input-label">Chọn ngày:</label>
+    //        <input type="date" id="selectedDate" class="swal2-input" value="${currentDateStr}" min="${currentDateStr}">
 
-            <label class="swal2-input-label">Giờ bắt đầu:</label>
-            <input type="time" id="startTime" class="swal2-input" value="${pad(currentHour + 1)}:00">
+    //        <label class="swal2-input-label">Giờ bắt đầu:</label>
+    //        <input type="time" id="startTime" class="swal2-input" value="${pad(currentHour + 1)}:00">
 
-            <label class="swal2-input-label">Giờ kết thúc:</label>
-            <input type="time" id="endTime" class="swal2-input" value="${pad(currentHour + 2)}:00">
-        `;
+    //        <label class="swal2-input-label">Giờ kết thúc:</label>
+    //        <input type="time" id="endTime" class="swal2-input" value="${pad(currentHour + 2)}:00">
+    //    `;
+
+    //    Swal.fire({
+    //        title: 'Đặt lịch hẹn',
+    //        html: htmlContent,
+    //        confirmButtonText: 'Xác nhận',
+    //        cancelButtonText: 'Hủy',
+    //        showCancelButton: true,
+    //        focusConfirm: false,
+    //        preConfirm: () => {
+    //            const date = document.getElementById('selectedDate').value;
+    //            const startTime = document.getElementById('startTime').value;
+    //            const endTime = document.getElementById('endTime').value;
+
+    //            const start = moment(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm');
+    //            const end = moment(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm');
+
+    //            if (!start.isValid() || !end.isValid()) {
+    //                Swal.showValidationMessage('Thời gian không hợp lệ');
+    //                return false;
+    //            }
+
+    //            if (start.isSameOrBefore(now)) {
+    //                Swal.showValidationMessage('Giờ bắt đầu phải lớn hơn thời gian hiện tại');
+    //                return false;
+    //            }
+
+    //            if (end.isSameOrBefore(start)) {
+    //                Swal.showValidationMessage('Giờ kết thúc phải lớn hơn giờ bắt đầu');
+    //                return false;
+    //            }
+
+    //            return {
+    //                start: start.format('YYYY-MM-DD HH:mm:ss'),
+    //                end: end.format('YYYY-MM-DD HH:mm:ss')
+    //            };
+    //        }
+    //    }).then((result) => {
+    //        if (result.isConfirmed && result.value) {
+    //            const { start, end } = result.value;
+
+    //            Swal.fire({
+    //                title: 'Đang xử lý...',
+    //                allowOutsideClick: false,
+    //                didOpen: () => {
+    //                    Swal.showLoading(); // Hiển thị spinner
+    //                }
+    //            });
+
+    //            $.ajax({
+    //                url: '/MedicalAppointment/setCalendar',
+    //                type: 'GET',
+    //                data: {
+    //                    start: start,
+    //                    end: end,
+    //                    id:id
+    //                },
+    //                dataType: 'json',
+    //                contentType: 'application/json;charset=utf-8',
+    //                success: function (data) {
+    //                    if (parseInt(data.status) === 1) {
+    //                        messageSuccess(data.message);
+    //                        GetAllMedicalappointment();
+    //                    } else {
+    //                        messageError(data.message);
+    //                    }
+    //                },
+    //                error: function (err) {
+    //                    messageError(err.responseText);
+    //                }
+    //            });
+    //        }
+    //    });
+
+    //function pad(num) {
+    //    return num < 10 ? '0' + num : num;
+    //    }
+
+
+        debugger
+        const style = document.createElement('style');
+        style.innerHTML = `
+    /* Thêm kiểu cho các input và select */
+    .swal2-input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    /* Thêm kiểu cho textarea */
+    #note {
+      height: 100px;
+      resize: none;
+    }
+
+    /* Thêm màu nền cho các input và select khi focus */
+    .swal2-input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+    }
+
+    /* Thêm kiểu cho các label */
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+
+    /* Cải thiện khoảng cách giữa các phần tử */
+    .swal2-html-container {
+      padding: 20px;
+    }
+
+    /* Thêm kiểu cho nút xác nhận */
+    .swal2-confirm {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .swal2-confirm:hover {
+      background-color: #45a049;
+    }
+
+    /* Cải thiện hiển thị thông báo */
+    .swal2-validationmessage {
+      color: red;
+      font-weight: bold;
+    }
+  `;
+        document.head.appendChild(style);
+
+        // Lấy thời gian hiện tại
+        let now = new Date();
+        now.setMinutes(now.getMinutes() + 30); // Tính thời gian hiện tại + 30 phút
 
         Swal.fire({
-            title: 'Đặt lịch hẹn',
-            html: htmlContent,
-            confirmButtonText: 'Xác nhận',
-            cancelButtonText: 'Hủy',
-            showCancelButton: true,
+            title: 'Nhập thông tin khám',
+            html: `
+      <label for="startTime">Giờ bắt đầu:</label><br>
+      <input type="datetime-local" id="startTime" class="swal2-input"><br>
+      <label for="endTime">Giờ kết thúc:</label><br>
+      <input type="datetime-local" id="endTime" class="swal2-input"><br>
+    `,
             focusConfirm: false,
             preConfirm: () => {
-                const date = document.getElementById('selectedDate').value;
-                const startTime = document.getElementById('startTime').value;
-                const endTime = document.getElementById('endTime').value;
+                const startTime = new Date(document.getElementById('startTime').value);
+                const endTime = new Date(document.getElementById('endTime').value);
 
-                const start = moment(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm');
-                const end = moment(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm');
-
-                if (!start.isValid() || !end.isValid()) {
-                    Swal.showValidationMessage('Thời gian không hợp lệ');
+                // Kiểm tra điều kiện ngày giờ
+                if (startTime <= new Date() || endTime <= startTime || endTime <= now) {
+                    Swal.showValidationMessage('Giờ bắt đầu phải sớm hơn 30 phút và giờ kết thúc phải lớn hơn giờ bắt đầu');
                     return false;
                 }
 
-                if (start.isSameOrBefore(now)) {
-                    Swal.showValidationMessage('Giờ bắt đầu phải lớn hơn thời gian hiện tại');
-                    return false;
-                }
-
-                if (end.isSameOrBefore(start)) {
-                    Swal.showValidationMessage('Giờ kết thúc phải lớn hơn giờ bắt đầu');
-                    return false;
-                }
-
-                return {
-                    start: start.format('YYYY-MM-DD HH:mm:ss'),
-                    end: end.format('YYYY-MM-DD HH:mm:ss')
-                };
+                // Gửi thông tin đi (tùy vào yêu cầu của bạn, có thể gọi API hoặc xử lý dữ liệu)
+                return { startTime, endTime};
             }
         }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                const { start, end } = result.value;
+            if (result.isConfirmed) {
+                const { startTime, endTime} = result.value;
 
                 Swal.fire({
                     title: 'Đang xử lý...',
@@ -611,9 +740,9 @@ function deleteCalendar(id) {
                     url: '/MedicalAppointment/setCalendar',
                     type: 'GET',
                     data: {
-                        start: start,
-                        end: end,
-                        id:id
+                        start: moment(startTime).format('YYYY-MM-DD HH:mm'),
+                        end: moment(endTime).format('YYYY-MM-DD HH:mm'),
+                        id: id
                     },
                     dataType: 'json',
                     contentType: 'application/json;charset=utf-8',
@@ -629,12 +758,9 @@ function deleteCalendar(id) {
                         messageError(err.responseText);
                     }
                 });
+                
             }
         });
-
-    function pad(num) {
-        return num < 10 ? '0' + num : num;
-    }
 }
 
 

@@ -128,6 +128,10 @@ function GetAllDoctor() {
             }
 
             var table = new Tabulator("#doctor_tb", {
+                groupBy: "Name",
+                groupHeader: function (value, count, data, group) {
+                    return value;
+                },
                 data: dataDoc,
                 maxHeight: "100%",
                 columnDefaults: {

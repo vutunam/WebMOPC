@@ -411,8 +411,8 @@ function CreatQR(id) {
                             }, 1000);
                             let pay = false;
                             const paymentChecker = setInterval(async () => {
-                                //const isPay = await checkPaid(randomCode, data.stk);
-                                const isPay = true;
+                                const isPay = await checkPaid(randomCode, data.stk);
+                                //const isPay = true;
                                 if (isPay) {
                                     clearInterval(interval);
                                     clearInterval(paymentChecker);
@@ -440,7 +440,7 @@ function CreatQR(id) {
                                         }
                                     });
                                 }
-                            }, 5000);
+                            }, 30000);
 
                             const timeout = setTimeout(() => {
                                 clearInterval(paymentChecker);

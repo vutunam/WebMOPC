@@ -100,6 +100,7 @@ function GetAllDepartments() {
             }
 
             var table = new Tabulator("#department_tb", {
+                
                 data: dataDepartment,
                 maxHeight: "100%",
                 columnDefaults: {
