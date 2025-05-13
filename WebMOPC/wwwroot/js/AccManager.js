@@ -27,20 +27,38 @@ function GetAllAcc() {
                     field: "LoginName",
                     width: 200,
                     formatter: "textarea", hozAlign: "left",
-                    bottomCalc: "count",
+                    bottomCalc: "count", headerFilter: "input",
                     bottomCalcFormatterParams: { precision: false, }
+                },
+                {
+                    title: "Mã người dùng",
+                    field: "CodeUser",
+                    width: 200,
+                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                },
+                {
+                    title: "Tên người dùng",
+                    field: "NameUser",
+                    width: 200,
+                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
                 },
                 {
                     title: "Mật khẩu",
                     field: "Password",
                     width: 200,
-                    formatter: "textarea", hozAlign: "left",
+                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
                 },
                 {
                     title: "Email",
                     field: "Email",
                     width: 200,
-                    formatter: "textarea", hozAlign: "left",
+                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                },
+                {
+                    title: "Loại tài khoản",
+                    field: "Position",
+                    width: 200,
+                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
                 },
                 
             ];
@@ -94,7 +112,7 @@ function GetAllAcc() {
                 columnDefaults: {
                     vertAlign: "middle", headerHozAlign: "center", headerWordWrap: true, hozAlign: "center"
                 },
-                layout: "fitDataStretch",
+                layout: "fitDataFills",
                 pagination: "local",
                 paginationSize: 20,
                 langs: {

@@ -1,0 +1,176 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Diagnostics;
+using WebMOPC.Common;
+using WebMOPC.Models;
+using WebMOPC.Models.DTO;
+using WebMOPC.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace WebMOPC.Controllers
+{
+    
+    public class DoctorController : Controller
+    {
+        DoctorsRepository docRepo = new DoctorsRepository();
+        DepartmentsRepository deRepo = new DepartmentsRepository();
+        UsersRepository uRepo = new UsersRepository();
+        [HttpGet("bacsi")]
+        public IActionResult Index()
+        {
+            ViewBag.department = new SelectList(deRepo.GetAll().Where(x => x.IsDeleted == false), "Id", "Name");
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAllDoctor()
+        {
+            try
+            {
+                var doc0 = SQLHelper<object>.ProcedureToDynamicLists("spGetAllDoctor", new string[] { }, new object[] { });
+                var doc = doc0[0];
+                return Json(new { status = 1, doc }, new System.Text.Json.JsonSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult onDeletedDoctor(int id)
+        {
+            try
+            {
+                Doctor doc = docRepo.GetByID(id);
+                doc.IsDeleted = true;
+                docRepo.Update(doc);
+
+                if (doc.UserId > 0)
+                {
+                    User u = uRepo.GetByID(id);
+                    u.IsDeleted = true;
+                    uRepo.Update(u);
+                }
+                return Json(new { status = 1, message = "Thông tin bác sĩ đã được xóa!" }, new System.Text.Json.JsonSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult getDoctor(int id)
+        {
+            try
+            {
+                Doctor doc = docRepo.GetByID(id);
+                return Json(new { status = 1, doc }, new System.Text.Json.JsonSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult SaveAccount(int id, string username, string email, string password)
+        {
+            try
+            {
+                User u = uRepo.GetAll().Where(x=> x.LoginName == username || x.Email == email).FirstOrDefault();
+                if(u != null)
+                {
+                    return Json(new { status = 0, message =  u.LoginName == username ? "Tên đăng nhập đã tồn tại!":"Email đã tồn tại!"}, new System.Text.Json.JsonSerializerOptions());
+                }
+
+                User us = new User();
+                us.LoginName = username;
+                us.Email = email;
+                us.Password = password;
+                us.IsDeleted = us.IsAdmin = false;
+                us.Avatar = "~/img/user.png";
+                uRepo.Create(us);
+
+                Doctor d = docRepo.GetByID(id);
+                d.UserId = us.Id;
+                docRepo.Update(d);
+
+                return Json(new { status = 1, message = "Thêm tài khoản thành công!" }, new System.Text.Json.JsonSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult Save([FromBody] Doctor d)
+        {
+            try
+            {
+                Doctor doc;
+
+                if (d.Id > 0)
+                {
+                    // Cập nhật
+                    doc = docRepo.GetByID(d.Id);
+                    if (doc == null)
+                        return Json(new { status = 0, message = "Không tìm thấy bác sĩ cần cập nhật." });
+
+                    doc.Code = d.Code;
+                    doc.FullName = d.FullName;
+                    doc.DateOfBirth = d.DateOfBirth;
+                    doc.Gender = d.Gender;
+                    doc.Phone = d.Phone;
+                    doc.Email = d.Email;
+                    doc.Cccd = d.Cccd;
+                    doc.Address = d.Address;
+                    doc.DepartmentId = d.DepartmentId;
+                    doc.Education = d.Education;
+                    doc.Description = d.Description;
+                    doc.CreatedDate = DateTime.Now;
+
+                    docRepo.Update(doc);
+                }
+                else
+                {
+                    var checkdoc = docRepo.GetAll().Where(x => x.Code == d.Code);
+                    if (checkdoc.Count()  > 0)
+                    {
+                        return Json(new { status = 0, message = "Mã bác sĩ đã tồn tại vui lòng kiểm tra lại!" });
+                    }
+                    doc = new Doctor
+                    {
+                        Code = d.Code,
+                        FullName = d.FullName,
+                        DateOfBirth = d.DateOfBirth,
+                        Gender = d.Gender,
+                        Phone = d.Phone,
+                        Email = d.Email,
+                        Cccd = d.Cccd,
+                        Address = d.Address,
+                        DepartmentId = d.DepartmentId,
+                        Education = d.Education,
+                        Description = d.Description,
+                        CreatedDate = DateTime.Now,
+                        IsDeleted = false,
+                        UserId = 0
+                    };
+
+                    docRepo.Create(doc);
+                }
+
+                return Json(new { status = 1, message = d.Id > 0?"Cập nhật thành công!":"Lưu bác sĩ thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = 0, message = ex.Message });
+            }
+        }
+    }
+}

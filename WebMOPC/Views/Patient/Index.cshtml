@@ -1,0 +1,94 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var imgPath = HttpContextAccessor.HttpContext?.Session.GetString("img") ?? "~/img/user.png";
+    var isRole = HttpContextAccessor.HttpContext.Session.GetInt32("isRole");
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-primary">
+                <input type="text" id="isRole" value="@isRole" hidden />
+                @if (isRole == 4)
+                {
+                    <div class="card-header d-flex justify-content-between align-items-center p-2">
+                        <button data-bs-toggle="modal" data-bs-target="#modal_doctor" type="button" id="btn_add_department" onclick="return onEditDoctor(0);" class="btn btn-outline-primary btn-sm text-uppercase rounded">
+                            <i class="fas fa-plus"></i> Thêm bệnh nhân
+                        </button>
+                    </div>
+                }
+                <div class="card-body p-2" style="min-height: 700px;">
+                    <div class="mt-2 border border-primary" id="doctor_tb"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_doctor" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="doctorId" value="" />
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white text-uppercase">Thông tin bệnh nhân</h5>
+            </div>
+            <div class="modal-body p-2">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Mã bệnh nhân <span class="text-danger">(*)</span></label>
+                        <input type="text" class="form-control" id="doctorCode" placeholder="Nhập mã bệnh nhân ..." />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Họ tên <span class="text-danger">(*)</span></label>
+                        <input type="text" class="form-control" id="doctorFullName" placeholder="Nhập họ tên ..." />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Ngày sinh</label>
+                        <input type="date" class="form-control" id="doctorDob" />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Giới tính</label>
+                        <select class="form-select" id="doctorGender">
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="doctorPhone" />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="doctorEmail" />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">CCCD</label>
+                        <input type="text" class="form-control" id="doctorCCCD" />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Bảo hiểm y tế</label>
+                        <input type="text" class="form-control" id="doctorBhyt" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label class="form-label">Địa chỉ</label>
+                        <textarea class="form-control" id="doctorAddress" rows="2" placeholder="Nhập địa chỉ ..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-2">
+                <button class="btn btn-success btn-sm" id="btn_save_doctor" onclick="return SaveDoctor();">
+                    Cập nhật
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/vendor/Jquery/jquery.min.js"></script>
+<script src="~/js/patient.js"></script>
