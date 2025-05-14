@@ -104,7 +104,7 @@ function GetAllInvoice() {
                 columnDefaults: {
                     vertAlign: "middle", headerHozAlign: "center", headerWordWrap: true, hozAlign: "center"
                 },
-                layout: "fitDataFills",
+                layout: "fitDataStretch",
                 pagination: "local",
                 paginationSize: 20,
                 langs: {

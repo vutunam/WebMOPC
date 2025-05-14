@@ -312,6 +312,7 @@ namespace WebMOPC.Controllers
 			user.LoginName = username;
 			user.Password = password;
 			user.IsDeleted = false;
+			user.IsAdmin = false;
 			_userRepo.Create(user);
 
             Patient pa = new Patient();
@@ -319,6 +320,7 @@ namespace WebMOPC.Controllers
 			pa.Gender = TextUtils.ToBoolean(gender);
 			pa.DateOfBirth = birthday;
 			pa.UserId = user.Id;
+			pa.IsDeleted = false;
             _patienRepo.Create(pa);
 
 			ViewBag.fullname = fullName;

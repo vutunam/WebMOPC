@@ -117,7 +117,7 @@
                             </div>
                         </div>
 
-                        @if (isRole == 3 || isRole == 2)
+                        @if (isRole != 12)
                         {
                             <div class="mb-3 col-md-6">
                                 <label for="" class="form-label">CCCD <span class="text-danger">(*)</span></label>
@@ -133,7 +133,7 @@
                             </div>
                         }
 
-                        @if (isRole == 3)
+                        @if (isRole != 2)
                         {
                             <div class="mb-3 col-md-6">
                                 <label for="" class="form-label">Học vấn <span class="text-danger">(*)</span></label>
@@ -145,7 +145,7 @@
                             <label for="address" class="form-label">Địa chỉ <span class="text-danger">(*)</span></label>
                             <input type="text" class="form-control" id="acc_address" name="address" placeholder="Address" />
                         </div>
-                        @if (isRole == 3)
+                        @if (isRole != 2)
                         {
                             <div class="mb-3 col-md-12">
                                 <label for="" class="form-label">Mô tả</label>

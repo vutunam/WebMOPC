@@ -18,7 +18,10 @@ function GetAllDoctor() {
                     title: "Mã bệnh nhân ",
                     field: "Code",
                     width: 200,
-                    formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                    formatter: function (cell, formatterParams, onRendered) {
+                        let value = cell.getValue();
+                        return value ? value : "";
+                    }, hozAlign: "left", headerFilter: "input"
                 },
                 {
                     title: "Tên bệnh nhân",
@@ -89,7 +92,7 @@ function GetAllDoctor() {
                 },
             ];
 
-            if (isRole == 4) {
+            if (isRole !=2) {
                 colunms.unshift(
                     {
                         title: "Thao tác",

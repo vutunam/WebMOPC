@@ -166,7 +166,6 @@ public partial class MopcContext : DbContext
             entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(250);
             entity.Property(e => e.FullName).HasMaxLength(250);
-            entity.Property(e => e.MedicalAppointmentId).HasColumnName("MedicalAppointmentID");
             entity.Property(e => e.Phone).HasMaxLength(250);
             entity.Property(e => e.UserId).HasColumnName("UserID");
         });

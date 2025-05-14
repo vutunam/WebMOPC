@@ -455,14 +455,14 @@ function GetAllMedicalappointment() {
                             if (cell.getValue() <= 0) htmlAction = '';
                             console.log('role', isRole);
 
-                            if (isRole === 2) {
+                            if (isRole == 2) {
                                 htmlAction = `
                                 <button onclick="return addDiagnosis(${diID},${id},${result});" type="button" class="btn btn-success btn-sm ms-1")>
                                     <i class="fa-brands fa-font-awesome"></i>
                                 </button>`;
                             }
 
-                            if (done == 1) {
+                            if (done == 1 && isRole != 2) {
                                 htmlAction = `
                                  <button data-bs-toggle="modal" data-bs-target="#modal_department" onclick="return getInvoice(${id},0);" type="button" class="btn btn-info btn-sm ms-1")>
                                     <i class="fas fa-file-invoice-dollar"></i></i>
