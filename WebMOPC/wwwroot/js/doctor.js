@@ -1,5 +1,9 @@
 ﻿jQuery(document).ready(function () {
     GetAllDoctor();
+    if (isRole != 4) {
+        document.getElementById("deExportExcel").style.display = "none";
+        document.getElementById("btn_add_department").style.display = "none";
+    }
 });
 var dataDoc;
 var isRole = parseInt($("#isRole").val());
@@ -53,31 +57,6 @@ function GetAllDoctor() {
                     }, hozAlign: "center", headerFilter: "input"
                 },
                 {
-                    title: "Địa chỉ",
-                    field: "Address",
-                    width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
-                },
-                {
-                    title: "Email",
-                    field: "Email",
-                    width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
-                },
-                {
-                    title: "CCCD",
-                    field: "CCCD",
-                    width: 200, formatter: "textarea", hozAlign: "center", headerFilter: "input"
-                },
-                {
-                    title: "Mô tả",
-                    field: "Description",
-                    width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
-                },
-                {
-                    title: "Học vấn",
-                    field: "Education",
-                    width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
-                },
-                {
                     title: "Phòng làm việc",
                     field: "Name",
                     width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
@@ -89,7 +68,10 @@ function GetAllDoctor() {
                 },
             ];
 
+           
+
             if (isRole == 4) {
+
                 colunms.unshift(
                     {
                         title: "Thao tác",
@@ -119,10 +101,36 @@ function GetAllDoctor() {
                  <button onclick="return addAccount(${id});" type="button" class="btn btn-info btn-sm ms-1")>
                     <i class="fas fa-user-plus"></i>
                 </button>`;
+                            if (isRole != 4) htmlAction = '';
                             return htmlAction;
                         },
                         download: false
 
+                    },
+                    {
+                        title: "Địa chỉ",
+                        field: "Address",
+                        width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                    },
+                    {
+                        title: "Email",
+                        field: "Email",
+                        width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                    },
+                    {
+                        title: "CCCD",
+                        field: "CCCD",
+                        width: 200, formatter: "textarea", hozAlign: "center", headerFilter: "input"
+                    },
+                    {
+                        title: "Mô tả",
+                        field: "Description",
+                        width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
+                    },
+                    {
+                        title: "Học vấn",
+                        field: "Education",
+                        width: 200, formatter: "textarea", hozAlign: "left", headerFilter: "input"
                     },
                 );
             }

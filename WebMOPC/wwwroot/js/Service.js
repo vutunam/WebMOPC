@@ -1,5 +1,9 @@
 ﻿jQuery(document).ready(function () {
     GetAllservices();
+    if (isRole != 4) {
+        document.getElementById("seExportExcel").style.display = "none";
+        document.getElementById("btn_add_service").style.display = "none";
+    }
 });
 var dataService;
 var deptId = 0;

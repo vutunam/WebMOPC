@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 
 <html lang="en"
-class="light-style layout-menu-fixed"
-dir="ltr"
-data-theme="theme-default"
-data-assets-path="~/assets/"
-data-template="vertical-menu-template-free">
+	  class="light-style layout-menu-fixed"
+	  dir="ltr"
+	  data-theme="theme-default"
+	  data-assets-path="~/assets/"
+	  data-template="vertical-menu-template-free">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -23,7 +23,7 @@ data-template="vertical-menu-template-free">
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+		  rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
 	<link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -77,7 +77,7 @@ data-template="vertical-menu-template-free">
 							<div data-i18n="Analytics">Phòng khám</div>
 						</a>
 					</li>
-					@if (isRole == 4 || isRole == 3 || isRole == 1)
+					@if (isRole == 4)
 					{
 						<li class="menu-item">
 							<a href="@Url.Action("Index", "Position")" class="menu-link">
@@ -92,30 +92,38 @@ data-template="vertical-menu-template-free">
 							<div data-i18n="Analytics">Bác sĩ</div>
 						</a>
 					</li>
-					<li class="menu-item">
-						<a href="@Url.Action("Index", "Staff")" class="menu-link">
-							<i class='bx bx-group me-2'></i>
-							<div data-i18n="Analytics">Nhân viên</div>
-						</a>
-					</li>
-					<li class="menu-item">
-						<a href="@Url.Action("Index", "Patient")" class="menu-link">
-							<i class='bx bxs-face me-2'></i>
-							<div data-i18n="Analytics">Bệnh nhân</div>
-						</a>
-					</li>
-					<li class="menu-item">
-						<a href="@Url.Action("Index", "AccManager")" class="menu-link">
-							<i class='bx bxs-coin-stack me-2'></i>
-							<div data-i18n="Analytics">Tài khoản</div>
-						</a>
-					</li>
-					<li class="menu-item">
-						<a href="@Url.Action("Index", "Bank")" class="menu-link">
-							<i class='bx bxs-bank me-2'></i>
-							<div data-i18n="Analytics">Ngân hàng thanh toán</div>
-						</a>
-					</li>
+					@if (isRole != 2)
+					{
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "Staff")" class="menu-link">
+								<i class='bx bx-group me-2'></i>
+								<div data-i18n="Analytics">Nhân viên</div>
+							</a>
+						</li>
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "Patient")" class="menu-link">
+								<i class='bx bxs-face me-2'></i>
+								<div data-i18n="Analytics">Bệnh nhân</div>
+							</a>
+						</li>
+					}
+
+
+					@if (isRole == 4)
+					{
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "AccManager")" class="menu-link">
+								<i class='bx bxs-coin-stack me-2'></i>
+								<div data-i18n="Analytics">Tài khoản</div>
+							</a>
+						</li>
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "Bank")" class="menu-link">
+								<i class='bx bxs-bank me-2'></i>
+								<div data-i18n="Analytics">Ngân hàng thanh toán</div>
+							</a>
+						</li>
+					}
 					<li class="menu-header small text-uppercase">
 						<span class="menu-header-text">Khám chữa bệnh</span>
 					</li>
@@ -138,12 +146,15 @@ data-template="vertical-menu-template-free">
 							<div data-i18n="Analytics">Dịch vụ</div>
 						</a>
 					</li>
-					<li class="menu-item">
-						<a href="@Url.Action("Index", "Medication")" class="menu-link">
-							<i class='bx bx-dna me-2'></i>
-							<div data-i18n="Analytics">Thông tin thuốc</div>
-						</a>
-					</li>
+					@if (isRole != 2)
+					{
+						<li class="menu-item">
+							<a href="@Url.Action("Index", "Medication")" class="menu-link">
+								<i class='bx bx-dna me-2'></i>
+								<div data-i18n="Analytics">Thông tin thuốc</div>
+							</a>
+						</li>
+					}
 					<li class="menu-header small text-uppercase">
 						<span class="menu-header-text">CÁ NHÂN</span>
 					</li>
@@ -213,7 +224,7 @@ data-template="vertical-menu-template-free">
 											<div class="d-flex">
 												<div class="flex-shrink-0 me-3">
 													<div class="avatar avatar-online">
-														<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" id="avatar_drop"/>
+														<img src="@Url.Content(imgPath)" alt class="w-px-40 h-auto rounded-circle" id="avatar_drop" />
 													</div>
 												</div>
 												<div class="flex-grow-1">

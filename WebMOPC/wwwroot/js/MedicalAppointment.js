@@ -10,6 +10,59 @@ jQuery(document).ready(function () {
 var isRole = parseInt($("#isRole").val());
 console.log(isRole);
 function SetCalendar() {
+    const customButtons = {};
+    if (isRole == 2) {
+        customButtons['datlichkham'] = {
+            text: 'Đặt lịch khám',
+            click: function () {
+                $.ajax({
+                    url: '/MedicalAppointment/CheckInforPatient',
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        if (parseInt(data.status) === 1) {
+                            Swal.fire({
+                                title: 'Đặt lịch khám',
+                                //backdrop: false,
+                                allowOutsideClick: true,
+                                html: `
+                    <textarea id="noteInput" style="width: 100%;" class="swal2-textarea m-0" placeholder="Nhập ghi chú triệu chứng"></textarea>
+                    <span class="row pt-2" style="color:red;">
+                        ⚠️ Lưu ý: Đặt lịch cần đặt cọc 2.000 VNĐ. Chúng tôi sẽ xác nhận trước 1 giờ và hoàn tiền nếu hủy lịch.
+                    </span>
+                    <div class="pt-2">
+                        📞 Chúng tôi sẽ liên hệ qua số <strong>${data.phone}</strong> của bạn. Nếu thông tin số điện thoại chưa đúng vui lòng cập nhật thông tin của bạn.
+                    </div>
+                `,
+                                showCancelButton: true,
+                                customClass: {
+                                    cancelButton: 'btn btn-success',
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                confirmButtonText: 'Xác nhận đặt lịch',
+                                cancelButtonText: 'Cập nhật thông tin',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const note = document.getElementById('noteInput').value;
+                                    CreatQR(note);
+                                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                    window.location.href = '/AccountInfor';
+                                }
+                            });
+                        } else {
+                            messageError(data.message);
+                        }
+
+                    },
+                    error: function (err) {
+                        messageError(err.responseText);
+                    }
+                });
+            }
+
+        };
+    }
     $.ajax({
         url: '/MedicalAppointment/GetAllCalendar',
         type: 'GET',
@@ -44,57 +97,7 @@ function SetCalendar() {
                             titleEl.innerText = '📅 LỊCH KHÁM - ' + (info.view.title)
                         }
                     },
-                    customButtons: {
-                        datlichkham: {
-                            text: 'Đặt lịch khám',
-                            click: function () {
-                                $.ajax({
-                                    url: '/MedicalAppointment/CheckInforPatient',
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    contentType: 'application/json;charset=utf-8',
-                                    success: function (data) {
-                                        if (parseInt(data.status) === 1) {
-                                            Swal.fire({
-                                                title: 'Đặt lịch khám',
-                                                //backdrop: false,
-                                                allowOutsideClick: true,
-                                                html: `
-                                            <textarea id="noteInput" style="width: 100%;" class="swal2-textarea m-0" placeholder="Nhập ghi chú triệu chứng"></textarea>
-                                            <span class="row pt-2" style="color:red;">
-                                                ⚠️ Lưu ý: Đặt lịch cần đặt cọc 2.000 VNĐ. Chúng tôi sẽ xác nhận trước 1 giờ và hoàn tiền nếu hủy lịch.
-                                            </span>
-                                            <div class="pt-2">
-                                                📞 Chúng tôi sẽ liên hệ qua số <strong>${data.phone}</strong> của bạn. Nếu thông tin số điện thoại chưa đúng vui lòng cập nhật thông tin của bạn.
-                                            </div>
-                                        `,
-                                                showCancelButton: true,
-                                                customClass: {
-                                                    cancelButton: 'btn btn-success',
-                                                    confirmButton: 'btn btn-primary'
-                                                },
-                                                confirmButtonText: 'Xác nhận đặt lịch',
-                                                cancelButtonText: 'Cập nhật thông tin',
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    const note = document.getElementById('noteInput').value;
-                                                    CreatQR(note);
-                                                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                                    window.location.href = '/AccountInfor';
-                                                }
-                                            });
-                                        } else {
-                                            messageError(data.message);
-                                        }
-
-                                    },
-                                    error: function (err) {
-                                        messageError(err.responseText);
-                                    }
-                                });
-                            }
-                        }
-                    },
+                    customButtons: customButtons,
                     dayMaxEvents: true,
                     editable: true,
                     droppable: true,
@@ -109,7 +112,7 @@ function SetCalendar() {
         error: function (err) {
             messageError(err.responseText);
         }
-    });
+    }); 
 }
 
 

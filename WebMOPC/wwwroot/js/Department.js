@@ -1,5 +1,9 @@
 ﻿jQuery(document).ready(function () {
     GetAllDepartments();
+    if (isRole != 4) {
+        document.getElementById("deExportExcel").style.display = "none";
+        document.getElementById("btn_add_department").style.display = "none";
+    }
 });
 var dataDepartment;
 var deptId = 0;
@@ -90,7 +94,7 @@ function GetAllDepartments() {
                 <button onclick="return onDeletedDepartment(${cell.getValue()}, '${code}');" type="button" class="btn btn-danger btn-sm ms-1")>
                     <i class="fas fa-trash"></i>
                 </button>`;
-                            if (cell.getValue() <= 0) htmlAction = '';
+                            if (cell.getValue() != 4) htmlAction = '';
                             return htmlAction;
                         },
                         download: false

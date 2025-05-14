@@ -59,7 +59,7 @@ function GetAllInvoice() {
                 },
             ];
 
-            if (isRole == 4) {
+            if (isRole != -1) {
                 colunms.unshift(
                     {
                         title: "Thao tác",
@@ -104,7 +104,7 @@ function GetAllInvoice() {
                 columnDefaults: {
                     vertAlign: "middle", headerHozAlign: "center", headerWordWrap: true, hozAlign: "center"
                 },
-                layout: "fitDataStretch",
+                layout: "fitDataFills",
                 pagination: "local",
                 paginationSize: 20,
                 langs: {

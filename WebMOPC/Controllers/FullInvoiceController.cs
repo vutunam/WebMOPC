@@ -17,6 +17,7 @@ namespace WebMOPC.Controllers
         BanksRepository baRepo = new BanksRepository();
         InvoiceDetailsRepository indRepo = new InvoiceDetailsRepository();
         PrescriptionsRepository presRepo = new PrescriptionsRepository();
+        MedicalAppointmentsRepository meRepo = new MedicalAppointmentsRepository();
         [HttpGet("fullinvoice")]
         public IActionResult Index()
         {
@@ -28,7 +29,24 @@ namespace WebMOPC.Controllers
         {
             try
             {
+                int isRole = TextUtils.ToInt(HttpContext.Session.GetInt32("isRole"));
+                int id = TextUtils.ToInt(HttpContext.Session.GetInt32("ID"));
+
                 List<Invoice> invs = inRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
+
+                if(isRole == 2)
+                {
+                    MedicalAppointment medi = meRepo.GetAll().Where(x => x.IsDeleted == false && x.PatientId == id).FirstOrDefault();
+                    if(medi != null)
+                    {
+                        invs = invs.Where(x => x.MedicalAppointmentId == medi.Id).ToList();
+                    }
+                    else
+                    {
+                        invs = [];
+                    }
+
+                }
                 return Json(new { status = 1, invs }, new System.Text.Json.JsonSerializerOptions());
             }
             catch (Exception ex)

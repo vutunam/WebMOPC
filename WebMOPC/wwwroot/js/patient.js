@@ -139,7 +139,7 @@ function GetAllDoctor() {
                 columnDefaults: {
                     vertAlign: "middle", headerHozAlign: "center", headerWordWrap: true, hozAlign: "center"
                 },
-                layout: "fitDataStretch",
+                layout: "fitDataFills",
                 pagination: "local",
                 paginationSize: 20,
                 langs: {
