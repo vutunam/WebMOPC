@@ -131,7 +131,7 @@ namespace WebMOPC.Controllers
         {
             try
             {
-
+                string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                 int id = TextUtils.ToInt(HttpContext.Session.GetInt32("ID"));
                 MedicalAppointment mea = new MedicalAppointment();
                 mea.Note = note;
@@ -142,6 +142,7 @@ namespace WebMOPC.Controllers
                 mea.IsDoned = false;
                 mea.MedicalType = false;
                 mea.CreatedDate = DateTime.Now;
+                mea.CreatedBy = login;
                 meRepo.Create(mea);
 
                 Bank b = baRepo.GetAll().Where(x => x.Bin == bin).FirstOrDefault();
@@ -235,6 +236,7 @@ namespace WebMOPC.Controllers
         {
             try
             {
+                string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                 Diagnosis di = id > 0 ? diRepo.GetByID(id) : new Diagnosis();
                 di.Name = name;
                 di.Status = status;
@@ -242,6 +244,7 @@ namespace WebMOPC.Controllers
                 di.Conclusion = conclusion;
                 di.Note = note;
                 di.IsDeleted = false;
+                di.CreatedBy = login;
                 var o = id > 0 ? diRepo.Update(di) : diRepo.Create(di);
                 string message = id <= 0 ? "Thêm chuẩn đoán thành công!" : "Đã sửa chuẩn đoán";
 
@@ -491,6 +494,7 @@ namespace WebMOPC.Controllers
 
                     foreach(var item in serviceList)
                     {
+                        string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                         Doctor doc = docRepo.GetAll().Where(x => x.Id == TextUtils.ToInt(item.doctorId)).FirstOrDefault();
 
                         InvoiceDetail ide = new InvoiceDetail();
@@ -500,6 +504,7 @@ namespace WebMOPC.Controllers
                         ide.Price = TextUtils.ToDecimal(item.Price);
                         ide.DepartmentId = doc.DepartmentId;
                         ide.DoctorId = doc.Id;
+                        ide.CreatedBy = login;
                         indRepo.Create(ide);
                     }
                 }
@@ -518,7 +523,7 @@ namespace WebMOPC.Controllers
 
                     foreach (var item in serviceList)
                     {
-
+                        string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                         Medication medic = medicaRepo.GetByID(TextUtils.ToInt(item.id));
                         int count = TextUtils.ToInt(medic.Quantity) - TextUtils.ToInt(item.Quantity);
                         if (count < 0)
@@ -543,6 +548,7 @@ namespace WebMOPC.Controllers
                         pep.Quantity = TextUtils.ToInt(item.Quantity);
                         pep.CreatedDate = DateTime.Now;
                         pep.Price = TextUtils.ToDecimal(item.Price);
+                        pep.CreatedBy = login;
                         pepRepo.Create(pep);
                     }
                 }

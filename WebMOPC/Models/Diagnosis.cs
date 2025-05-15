@@ -20,4 +20,6 @@ public partial class Diagnosis
     public string? Note { get; set; }
 
     public DateTime? CreatedDate { get; set; }
+
+    public string? CreatedBy { get; set; }
 }

@@ -18,6 +18,7 @@
         public bool IsDoned { get; set; }
         public int PaymentType { get; set; }
         public string Phone { get; set; }
+        public string CreatedBy { get; set; }
         public int InvoiceID { get; set; }
         public int InvoiceStatus { get; set; }
         public int BankID { get; set; }

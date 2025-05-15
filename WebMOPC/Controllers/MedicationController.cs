@@ -114,6 +114,7 @@ namespace WebMOPC.Controllers
                     me.SupplierContact = meSupplierContact;
                     me.Note = meNote;
                     me.IsDeleted = false;
+                    
                     meRepo.Create(me);
                     return Json(new { status = 1, message = $"Thuốc đã được thêm  mới!" }, new System.Text.Json.JsonSerializerOptions());
                 }

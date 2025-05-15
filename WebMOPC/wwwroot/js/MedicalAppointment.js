@@ -370,6 +370,12 @@ function GetAllMedicalappointment() {
                     hozAlign: "center", headerFilter: "input"
                 },
                 {
+                    title: "Ghi chú",
+                    field: "Note",
+                    width: 200,
+                    hozAlign: "center", headerFilter: "input"
+                },
+                {
                     title: "Loại khám",
                     field: "MedicalType",
                     width: 200,
@@ -410,6 +416,21 @@ function GetAllMedicalappointment() {
                     hozAlign: "center", headerFilter: "input"
                 },
             ];
+
+            if (isRole == 4) {
+                colunms.push(
+                    {
+                        title: "Người tạo",
+                        field: "CreatedBy",
+                        width: 200,
+                        formatter: function (cell, formatterParams, onRendered) {
+                            const value = cell.getValue();
+                            return value;
+                        },
+                        hozAlign: "center", headerFilter: "input"
+                    },
+                );
+            }
 
                 colunms.unshift(
                     {

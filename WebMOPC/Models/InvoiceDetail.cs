@@ -18,4 +18,6 @@ public partial class InvoiceDetail
     public int? DepartmentId { get; set; }
 
     public int? DoctorId { get; set; }
+
+    public string? CreatedBy { get; set; }
 }

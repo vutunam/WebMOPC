@@ -288,6 +288,7 @@ namespace WebMOPC.Controllers
 		[HttpPost]
 		public IActionResult RegisterAcc(string fullName, DateTime birthday, int gender, string username, string password, string email)
 		{
+			string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
 			User uMail = _userRepo.GetAll().Where(x => x.Email == email).FirstOrDefault();
 			User uLogin = _userRepo.GetAll().Where(x => x.LoginName.ToUpper() == username.ToUpper()).FirstOrDefault();
 

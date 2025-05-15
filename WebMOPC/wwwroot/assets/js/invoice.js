@@ -11,6 +11,10 @@ function GetAllInvoice() {
         contentType: 'application/json;charset=utf-8',
         success: function (data) {
             dataDepartment = data.invs;
+
+            if (isRole == 4) {
+                dataDepartment = data.doc0;
+            }
             let colunms = [
                 {
                     title: "Mã hóa đơn",
@@ -59,6 +63,21 @@ function GetAllInvoice() {
                 },
             ];
 
+            if (isRole == 4) {
+                colunms.push(
+                    {
+                        title: "Người tạo",
+                        field: "CreatedBy",
+                        width: 200,
+                        formatter: function (cell, formatterParams, onRendered) {
+                            const value = cell.getValue();
+                            return value;
+                        },
+                        hozAlign: "center", headerFilter: "input"
+                    },
+                );
+            }
+
             if (isRole != -1) {
                 colunms.unshift(
                     {
@@ -83,6 +102,16 @@ function GetAllInvoice() {
                                 </button>`;
                             if (cell.getValue() <= 0 || code == 1 || code == 3) htmlAction = `
                                 <span style="color:red"><i class="fas fa-lock"></i></span>`;
+
+                            if (isRole == 2) {
+                                htmlAction = `
+                                <button onclick="return CreatQR(${id});"  type="button" class="btn btn-warning btn-sm ms-1")>
+                                    <i class="fa-solid fa-qrcode"></i>
+                                </button>
+                                <button onclick="return printInv(${id});" data-bs-toggle="modal" data-bs-target="#modal_department" type="button" class="btn btn-info btn-sm ms-1")>
+                                    <i class="fa-solid fa-print"></i>
+                                </button>`;
+                            }
 
                             if (code == 3) {
                                 htmlAction = `
@@ -218,6 +247,9 @@ function printInv(id) {
                         bottomCalc: "sum",
                     },
                 ];
+
+
+
                 tbService = new Tabulator("#tbHoadon", {
                     data: data.ind0,
                     maxHeight: "100%",

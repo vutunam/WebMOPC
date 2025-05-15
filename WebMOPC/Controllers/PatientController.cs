@@ -81,7 +81,7 @@ namespace WebMOPC.Controllers
             try
             {
                 Patient doc = paRepo.GetByID(id);
-
+                string login = TextUtils.ToString(HttpContext.Session.GetString("loginName"));
                 MedicalAppointment me = new MedicalAppointment();
                 me.MedicalDateStart = startTime;
                 me.MedicalDateEnd = endTime;
@@ -90,6 +90,7 @@ namespace WebMOPC.Controllers
                 me.PatientId = id;
                 me.IsDeleted = false;
                 me.CreatedDate = DateTime.Now;
+                me.CreatedBy = login;
                 meRepo.Create(me);
                 return Json(new { status = 1, message = "Tạo lịch khám thành công!" }, new System.Text.Json.JsonSerializerOptions());
             }

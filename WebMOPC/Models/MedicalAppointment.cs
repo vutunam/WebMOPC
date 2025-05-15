@@ -26,4 +26,6 @@ public partial class MedicalAppointment
     public DateTime? CreatedDate { get; set; }
 
     public bool? IsDoned { get; set; }
+
+    public string? CreatedBy { get; set; }
 }

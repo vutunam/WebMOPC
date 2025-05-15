@@ -45,9 +45,10 @@ namespace WebMOPC.Controllers
                     {
                         invs = [];
                     }
-
                 }
-                return Json(new { status = 1, invs }, new System.Text.Json.JsonSerializerOptions());
+                var doc = SQLHelper<object>.ProcedureToDynamicLists("spGetInvois", new string[] { }, new object[] { });
+                var doc0 = doc[0];
+                return Json(new { status = 1, invs, doc0 }, new System.Text.Json.JsonSerializerOptions());
             }
             catch (Exception ex)
             {
